@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.navbar {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); 
+  color: white;
+  padding: 5px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  justify-content: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 50px;
+  padding-left: 6px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 35px;
+  display: inline;
+  font-size: 29px;
+}

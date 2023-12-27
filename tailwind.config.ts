@@ -9,6 +9,9 @@ export default {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
     },
+    colors: {
+      magenta: "#830302"
+    },
   },
   plugins: [],
 } satisfies Config;
