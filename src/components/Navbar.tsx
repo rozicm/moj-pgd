@@ -6,10 +6,17 @@ import Image from "next/image";
 const Navbar: React.FC = () => {
   return (
     <nav>
-      <div className="navbar-container">
-        <div className="logo-container pt-1">
-          <Image src={LogoImg} height={90} alt="Logo"></Image>
-          <span className="logo">MojPGD</span>
+      <div className="navbar-container backdrop-blur-sm">
+        <div className="logo-container">
+          <Image
+            src={LogoImg}
+            height={80}
+            alt="Logo"
+            className="my-2 ml-2"
+          ></Image>
+          <span className="logo">
+            <a href="#">MojPGD</a>
+          </span>
         </div>
         <ul className="nav-links">
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">

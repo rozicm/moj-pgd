@@ -2,20 +2,14 @@
   margin: 0;
   padding: 0;
 }
+
 .navbar {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.1
-  ); 
-  color: white;
-  padding: 5px;
-  position: fixed;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: rgb(0, 0, 0);
   width: 100%;
-  top: 0;
-  z-index: 1000;
   justify-content: center;
+  position: sticky;
+  top: 0;
 }
 
 .logo-container {
@@ -31,6 +25,7 @@
 .navbar-container {
   display: flex;
   justify-content: space-between;
+  
   align-items: center;
 }
 
@@ -40,7 +35,18 @@
 }
 
 .nav-links li {
-  margin-right: 35px;
+  margin: 25px;
   display: inline;
   font-size: 29px;
+}
+
+.okvir-container {
+  width: 100%;
+  align-items: center;
+  overflow: hidden;
+}
+
+.okvir {
+  float: left;
+  box-sizing: border-box;
 }
