@@ -7,10 +7,6 @@ generator client {
 
 datasource db {
     provider = "mysql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url = env("DATABASE_URL")
     relationMode = "prisma"
 }
@@ -27,7 +23,6 @@ model Post {
     @@index([name])
 }
 
-// Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
     userId            String
@@ -72,3 +67,57 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Oprema {
+    id      Int   @id 
+    naziv_opreme String
+    status_opreme Boolean
+}
+
+model Finance {
+    transaction_id Int @id
+    priliv Float
+    odliv Float
+
+}
+
+
+model Voznja {
+    voznja_id      Int      @id
+    datum          DateTime
+    zac_km         Int
+    kon_km         Int
+    namen          String
+    voznik         String
+}
+
+model Clan {
+    clan_id        String           @id @default(cuid())
+    ime            String
+    priimek        String
+    datum_rojstva  DateTime
+    specialnosti   String
+    kraj_bivanja   String
+    zdravniski     DateTime
+    funkcija       String
+    cin            String
+    intervencije   ClanIntervencija[]
+}
+
+model Intervencija {
+    intervencija_id Int              @id
+    datum           DateTime
+    clanIntervencije ClanIntervencija[]
+}
+
+model ClanIntervencija {
+    id              Int               @id @default(autoincrement())
+    clan_id         String
+    intervencija_id Int              
+
+    clan            Clan              @relation(fields: [clan_id], references: [clan_id])
+    intervencija    Intervencija      @relation(fields: [intervencija_id], references: [intervencija_id])
+
+    @@unique([clan_id, intervencija_id])
+}
+

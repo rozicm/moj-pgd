@@ -15,21 +15,24 @@ const Navbar: React.FC = () => {
             className="my-2 ml-2"
           ></Image>
           <span className="logo">
-            <a href="#">MojPGD</a>
+            <a href="./">MojPGD</a>
           </span>
         </div>
         <ul className="nav-links">
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="#">Članstvo</a>
+            <a href="/clani">Člani</a>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="#">Oprema</a>
+            <a href="/oprema">Oprema</a>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="#">Finance</a>
+            <a href="/finance">Finance</a>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="#">Vožnje</a>
+            <a href="/voznje">Vožnje</a>
+          </li>
+          <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+            <a href="/intervencije">Intervencije</a>
           </li>
         </ul>
         <div className="sign-up">
