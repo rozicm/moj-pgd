@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 import AuthShowcase from "./AuthShowcase";
 import LogoImg from "~/assets/img/logo.png";
 import Image from "next/image";
@@ -15,24 +15,36 @@ const Navbar: React.FC = () => {
             className="my-2 ml-2"
           ></Image>
           <span className="logo">
-            <a href="./">MojPGD</a>
+            <Link href="/">
+              <a>MojPGD</a>
+            </Link>
           </span>
         </div>
         <ul className="nav-links">
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="/clani">Člani</a>
+            <Link href="/clani">
+              <a>Člani</a>
+            </Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="/oprema">Oprema</a>
+            <Link href="/oprema">
+              <a>Oprema</a>
+            </Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="/finance">Finance</a>
+            <Link href="/finance">
+              <a>Finance</a>
+            </Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="/voznje">Vožnje</a>
+            <Link href="/voznje">
+              <a>Vožnje</a>
+            </Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="/intervencije">Intervencije</a>
+            <Link href="/intervencije">
+              <a>Intervencije</a>
+            </Link>
           </li>
         </ul>
         <div className="sign-up">
