@@ -20,6 +20,7 @@ model Post {
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
 
+    @@index([createdById], name: "idx_createdBy")
     @@index([name])
 }
 
@@ -39,6 +40,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId], name: "idx_userId")
 }
 
 model Session {
@@ -47,6 +49,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId], name: "idx_session_userId")
 }
 
 model User {
@@ -110,14 +114,16 @@ model Intervencija {
     clanIntervencije ClanIntervencija[]
 }
 
+
 model ClanIntervencija {
     id              Int               @id @default(autoincrement())
     clan_id         String
-    intervencija_id Int              
+    intervencija_id Int
 
     clan            Clan              @relation(fields: [clan_id], references: [clan_id])
     intervencija    Intervencija      @relation(fields: [intervencija_id], references: [intervencija_id])
 
+    @@index([clan_id], name: "idx_clanIntervencija_clan_id")
+    @@index([intervencija_id], name: "idx_clanIntervencija_intervencija_id")
     @@unique([clan_id, intervencija_id])
 }
-
