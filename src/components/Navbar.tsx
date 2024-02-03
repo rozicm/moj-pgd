@@ -2,52 +2,43 @@ import Link from "next/link";
 import AuthShowcase from "./AuthShowcase";
 import LogoImg from "~/assets/img/logo.png";
 import Image from "next/image";
+// import { api } from "~/utils/api";
 
 const Navbar: React.FC = () => {
+  // const { data } = api.post.hello.useQuery();
+  // console.log(data?.[1]);
   return (
     <nav>
       <div className="navbar-container backdrop-blur-sm">
         <div className="logo-container">
           <Image
             src={LogoImg}
-            height={80}
+            height={60}
             alt="Logo"
             className="my-2 ml-2"
           ></Image>
           <span className="logo">
-            <Link href="/">
-              <a>MojPGD</a>
-            </Link>
+            <Link href="/">MojPGD</Link>
           </span>
         </div>
         <ul className="nav-links">
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <Link href="/clani">
-              <a>Člani</a>
-            </Link>
+            <Link href="/clani">Člani</Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <Link href="/oprema">
-              <a>Oprema</a>
-            </Link>
+            <Link href="/oprema">Oprema</Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <Link href="/finance">
-              <a>Finance</a>
-            </Link>
+            <Link href="/finance">Finance</Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <Link href="/voznje">
-              <a>Vožnje</a>
-            </Link>
+            <Link href="/voznje">Vožnje</Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <Link href="/intervencije">
-              <a>Intervencije</a>
-            </Link>
+            <Link href="/intervencije">Intervencije</Link>
           </li>
         </ul>
-        <div className="sign-up">
+        <div className="color-white">
           <AuthShowcase />
         </div>
       </div>

@@ -5,10 +5,9 @@
 
 .navbar {
   background-color: rgba(255, 255, 255, 0.7);
-  color: rgb(0, 0, 0);
   width: 100%;
   justify-content: center;
-  position: sticky;
+  position: fixed;
   top: 0;
 }
 
@@ -18,15 +17,15 @@
 }
 
 .logo {
-  font-size: 50px;
+  font-size: 40px;
   padding-left: 6px;
 }
 
 .navbar-container {
   display: flex;
   justify-content: space-between;
-
   align-items: center;
+  height: 70px;
 }
 
 .nav-links {
@@ -37,7 +36,7 @@
 .nav-links li {
   margin: 25px;
   display: inline;
-  font-size: 29px;
+  font-size: 22px;
 }
 
 .okvir-container {
@@ -50,3 +49,149 @@
   float: left;
   box-sizing: border-box;
 }
+
+.custom-table-container {
+  width: 90%;
+  overflow-x: auto;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  position: relative; /* Position relative for stacking context */
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  position: relative; /* Position relative for stacking context */
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  color: #fff; /* White text color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle box shadow for separation */
+  font-weight: bold; /* Make the text bold */
+}
+
+.custom-table thead th {
+  background: linear-gradient(45deg, #ff3d00, #ff1744); /* Gradient Red */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 2; /* Ensure it's above other elements */
+}
+
+.custom-table tbody tr:hover {
+  background-color: #4a0c1e; /* Darker Red */
+  transition: background-color 0.3s ease;
+  transform: translateY(-5px); /* Elevate slightly on hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+/* Animation for table rows */
+.custom-table tbody tr {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* New styles for table header and alternating row colors */
+.custom-table thead th {
+  background-color: #4a0c1e; /* Dark Red */
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #31111e; /* Darker Red for even rows */
+}
+
+.custom-table tbody tr:hover {
+  background-color: #5e1529; /* Even darker red on hover */
+}
+
+/* Rounded corners for first and last rows */
+.custom-table tbody tr:first-child td:first-child,
+.custom-table tbody tr:first-child td:last-child,
+.custom-table tbody tr:last-child td:first-child,
+.custom-table tbody tr:last-child td:last-child {
+  border-radius: 8px;
+}
+
+/* Add gradient effect on hover */
+.custom-table tbody tr:hover td {
+  background: linear-gradient(45deg, #ff3d00, #ff1744);
+}
+
+/* Styling for the cell content */
+.custom-table tbody td {
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: bold; /* Make the text in td elements bold */
+}
+
+
+.input-form-container {
+  width: 95vw; /* Set width to 95% of the viewport width */
+  margin-top: 10px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.4); /* Slightly transparent white */
+  border-radius: 10px;
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+}
+
+.input-form-container h2 {
+  margin-bottom: 10px;
+  text-align: center; /* Center the heading */
+}
+
+.input-form-container form {
+  display: flex; /* Use flexbox */
+  flex-wrap: wrap; /* Allow wrapping of elements */
+  justify-content: center; /* Center items horizontally */
+}
+
+.input-form-container input,
+.input-form-container button {
+  padding: 10px 20px;
+  margin: 5px; /* Add margin between elements */
+  border-radius: 5px;
+}
+
+.input-form-container input {
+  flex: 1; /* Make input fields flexible */
+  border: 1px solid #000000; /* Add borders */
+}
+
+.input-form-container button {
+  background-color: #ba2121; /* Match the color with the table header */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.input-form-container button:hover {
+  background-color: #960000; /* Darken the color on hover */
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+

@@ -7,13 +7,19 @@ import {
 } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
+  hello: publicProcedure.query(({ ctx }) => {
+    // return {
+    //   greeting: `Hello ${input.text}`,
+    // };
+    return ctx.db.clan.findMany();
+  }),
+
+  get_oprema: publicProcedure.query(({ ctx }) => {
+    return ctx.db.oprema.findMany();
+  }),
+  get_voznja: publicProcedure.query(({ ctx }) => {
+    return ctx.db.voznja.findMany();
+  }),
 
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))

@@ -11,13 +11,14 @@ const AuthShowcase: React.FC = () => {
   );
 
   return (
-    <div className="flex items-center justify-center pr-2 text-3xl">
-      <p className="text-white text-center text-2xl">
+    <div className="flex items-center justify-center pr-2 text-xl">
+      <p className="color-white text-center text-2xl">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="bg-white/10 text-white hover:bg-red-600 hover:bg-white/20 hover:scale-110 transform rounded-full bg-magenta px-14 py-2 font-semibold no-underline transition duration-500 ease-in-out hover:-translate-y-1"
+        className="color-white text-white transform rounded-full bg-magenta px-8 py-2 font-semibold no-underline transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110"
+        style={{ color: "white" }}
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Odjava" : "Prijava"}

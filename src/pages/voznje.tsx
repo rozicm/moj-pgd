@@ -1,8 +1,13 @@
 import React from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
+import { api } from "~/utils/api";
 
 export default function Voznje() {
+  const { data, error, isLoading } = api.post.get_voznja.useQuery();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
   return (
     <>
       <Head>
@@ -15,7 +20,34 @@ export default function Voznje() {
           <Navbar />
         </div>
       </div>
-      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta"></main>
+      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+      <div className="custom-table-container">
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>Voznja ID</th>
+                <th>Datum</th>
+                <th>Začetni kilometri</th>
+                <th>Končni kilometri</th>
+                <th>Namen</th>
+                <th>Voznik</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((voznja) => (
+                <tr key={voznja.voznja_id}>
+                  <td>{voznja.voznja_id}</td>
+                  <td>{voznja.datum.toLocaleDateString()}</td>
+                  <td>{voznja.zac_km}</td>
+                  <td>{voznja.kon_km}</td>
+                  <td>{voznja.namen}</td>
+                  <td>{voznja.voznik}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </main>
     </>
   );
 }

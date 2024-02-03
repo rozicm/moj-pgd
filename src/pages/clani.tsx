@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
+import ClanTable from "~/components/ClanTable";
 
 export default function Clani() {
   return (
@@ -15,7 +16,11 @@ export default function Clani() {
           <Navbar />
         </div>
       </div>
-      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta"></main>
+      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+        
+          <ClanTable />
+        
+      </main>
     </>
   );
 }
