@@ -44,14 +44,14 @@ const ClanTable: React.FC = () => {
                   <td>{clanItem.priimek}</td>
                   <td>{clanItem.datum_rojstva.toLocaleDateString()}</td>
 
-                  <td>{clanItem.specialnosti ?? "/"}</td>
+                  <td>{clanItem.specialnosti || "/"}</td>
                   <td>{clanItem.kraj_bivanja ?? "/"}</td>
                   <td>
                     {clanItem.zdravniski
                       ? clanItem.zdravniski.toLocaleDateString()
                       : "/"}
                   </td>
-                  <td>{clanItem.funkcija ?? "/"}</td>
+                  <td>{clanItem.funkcija || "/"}</td>
                   <td>{clanItem.cin ?? "/"}</td>
                 </tr>
               );

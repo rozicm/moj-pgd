@@ -1,17 +1,9 @@
-import React, { useState } from "react";
+import ClanTable from "./ClanTable";
 
 const VegovaSiFrame: React.FC = () => {
-  const [url] = useState("https://www.vegova.si");
-
   return (
     <div className="okvir">
-      <iframe
-        title="Vegova.si"
-        src={url}
-        width="100%"
-        height="600px"
-        className="rounded-lg"
-      />
+      <ClanTable />
     </div>
   );
 };

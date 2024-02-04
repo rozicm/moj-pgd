@@ -70,7 +70,7 @@
 .custom-table td {
   padding: 12px;
   text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
   color: #fff; /* White text color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle box shadow for separation */
   font-weight: bold; /* Make the text bold */
@@ -93,7 +93,9 @@
 
 /* Animation for table rows */
 .custom-table tbody tr {
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition */
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -143,7 +145,6 @@
   line-height: 1.5;
   font-weight: bold; /* Make the text in td elements bold */
 }
-
 
 .input-form-container {
   width: 95vw; /* Set width to 95% of the viewport width */
@@ -195,3 +196,26 @@
   display: inline-block;
 }
 
+.cool-image {
+  transform: rotate(5deg) scale(1); /* Rotation and scale */
+  transition:
+    filter 0.5s ease,
+    transform 0.5s ease; /* Smooth transition for effects */
+  animation: flow 5s infinite alternate ease-in-out; /* Flow animation */
+}
+
+.cool-image:hover {
+  transform: rotate(0deg) scale(1.1); /* Reset rotation and scale up slightly on hover */
+}
+
+@keyframes flow {
+  0% {
+    transform: translateY(-10px); /* Start slightly above */
+  }
+  50% {
+    transform: translateY(10px); /* Move down */
+  }
+  100% {
+    transform: translateY(-10px); /* Move back up */
+  }
+}

@@ -30,6 +30,7 @@ export default function Oprema() {
             alt="Description of your image"
             width={800}
             height={600}
+            className="cool-image"
           />
         </div>
 

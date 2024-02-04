@@ -98,10 +98,10 @@ model Clan {
     ime            String
     priimek        String
     datum_rojstva  DateTime
-    specialnosti   String?
+    specialnosti   String
     kraj_bivanja   String
     zdravniski     DateTime?
-    funkcija       String?
+    funkcija       String
     cin            String
     intervencije   ClanIntervencija[]
 }
