@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import Image from "next/image";
@@ -74,18 +73,21 @@ export default function Oprema() {
                   <td>{item.id}</td>
                   <td>{item.naziv_opreme}</td>
                   <td>{item.kolicina}</td>
-                  <td>
+                  <td
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      handleStatusClick(item.id, item.status_opreme)
+                    }
+                  >
                     <span
                       style={{
                         color: item.status_opreme
                           ? "rgba(0, 255, 0, 1)"
                           : "rgba(255, 0, 0, 1)",
                         fontSize: "24px",
-                        cursor: "pointer",
                       }}
-                      onClick={() =>
-                        handleStatusClick(item.id, item.status_opreme)
-                      }
                     >
                       ●
                     </span>

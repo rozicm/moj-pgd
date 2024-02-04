@@ -19,16 +19,17 @@ export const postRouter = createTRPCRouter({
   get_oprema: publicProcedure.query(({ ctx }) => {
     return ctx.db.oprema.findMany();
   }),
+
   get_voznja: publicProcedure.query(({ ctx }) => {
     return ctx.db.voznja.findMany();
   }),
-  
+
   update_oprema_status: publicProcedure
     .input(
       z.object({
         oprema_id: z.number(),
         new_status: z.boolean(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { oprema_id, new_status } = input;
@@ -64,6 +65,25 @@ export const postRouter = createTRPCRouter({
       console.log(input);
 
       return ctx.db.clan.create({
+        data: input,
+      });
+    }),
+  add_voznja: publicProcedure
+    .input(
+      z.object({
+        voznja_id: z.number().min(1),
+        datum: z.date(),
+        zac_km: z.number(),
+        kon_km: z.number(),
+        namen: z.string(),
+        voznik: z.string(),
+      }),
+    )
+
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
+
+      return ctx.db.voznja.create({
         data: input,
       });
     }),

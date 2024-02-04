@@ -77,11 +77,18 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
           value={priimek}
           onChange={(e) => setPriimek(e.target.value)}
         />
+
         <input
           type="text"
           placeholder="Datum rojstva"
           value={datumRojstva}
           onChange={(e) => setDatumRojstva(e.target.value)}
+          onFocus={(e) => {
+            if (datumRojstva !== "") {
+              setDatumRojstva(""); // Clear the value when focused if it's not already empty
+            }
+            e.target.type = "date"; // Change the input type to 'date' when focused
+          }}
         />
         <input
           type="text"
@@ -100,6 +107,12 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
           placeholder="Zdravniški"
           value={zdravniski}
           onChange={(e) => setZdravniski(e.target.value)}
+          onFocus={(e) => {
+            if (zdravniski !== "") {
+              setZdravniski(""); // Clear the value when focused if it's not already empty
+            }
+            e.target.type = "date"; // Change the input type to 'date' when focused
+          }}
         />
         <input
           type="text"

@@ -1,13 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import { api } from "~/utils/api";
+import InputVoznik from "~/components/InputVoznik";
+
+interface VoznjaDataRow {
+  voznja_id: number;
+  datum: Date;
+  zac_km: number;
+  kon_km: number;
+  namen: string;
+  voznik: string;
+}
 
 export default function Voznje() {
-  const { data, error, isLoading } = api.post.get_voznja.useQuery();
+  const { data, error, isLoading, refetch } = api.post.get_voznja.useQuery();
+  const createNew = api.post.add_voznja.useMutation();
+  const [lastVoznjaId, setLastVoznjaId] = useState<number>(0);
+  const [lastKonKm, setLastKonKm] = useState<number>(0);
+
+  const handleAddMember = async (newMemberData: VoznjaDataRow) => {
+    try {
+      await createNew.mutateAsync(newMemberData);
+      await refetch();
+      console.log(newMemberData);
+      console.log("New member added:");
+    } catch (error) {
+      console.error("Error adding new member:");
+    }
+  };
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const lastData = data[data.length - 1];
+      if (lastData) {
+        setLastVoznjaId(lastData.voznja_id + 1);
+        setLastKonKm(lastData.kon_km);
+        console.log("Last voznja_id:", lastData.voznja_id + 1);
+        console.log("Last kon_km:", lastData.kon_km);
+      } else {
+        console.error("Error: lastData is undefined");
+      }
+    }
+  }, [data]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+
   return (
     <>
       <Head>
@@ -21,7 +60,7 @@ export default function Voznje() {
         </div>
       </div>
       <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
-      <div className="custom-table-container">
+        <div className="custom-table-container mt-16 mb-6 " style={{ maxHeight: "365px" }}>
           <table className="custom-table">
             <thead>
               <tr>
@@ -46,6 +85,14 @@ export default function Voznje() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="input-form-container mx-auto">
+        
+            <InputVoznik
+              lastVoznjaId={lastVoznjaId}
+              lastKonKm={lastKonKm}
+              onAdd={handleAddMember}
+            />
         </div>
       </main>
     </>

@@ -17,8 +17,15 @@ const AuthShowcase: React.FC = () => {
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="color-white text-white transform rounded-full bg-magenta px-8 py-2 font-semibold no-underline transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110"
-        style={{ color: "white" }}
+        className={`transform rounded-full px-8 py-2 font-semibold no-underline transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110 ${
+          sessionData
+            ? "bg-red-600"
+            : "from-red-600 to-red-900 bg-gradient-to-tr"
+        }`}
+        style={{
+          color: "white",
+          background: "linear-gradient(45deg, #ff3d00, #ff1744)",
+        }}
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Odjava" : "Prijava"}
