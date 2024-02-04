@@ -53,8 +53,30 @@
 .custom-table-container {
   width: 90%;
   overflow-x: auto;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
   position: relative; /* Position relative for stacking context */
+}
+
+/* Define scrollbar colors using scrollbar-color property */
+.custom-table-container {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #555 #333; /* Track and thumb color */
+}
+
+/* Track */
+.custom-table-container::-webkit-scrollbar-track {
+  background: #333; /* Darker track color */
+}
+
+/* Handle */
+.custom-table-container::-webkit-scrollbar-thumb {
+  background: #555; /* Darker thumb color */
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.custom-table-container::-webkit-scrollbar-thumb:hover {
+  background: #777; /* Lighter thumb color on hover */
 }
 
 .custom-table {
@@ -62,7 +84,7 @@
   border-collapse: collapse;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
   position: relative; /* Position relative for stacking context */
 }
 
@@ -147,46 +169,99 @@
 }
 
 .input-form-container {
-  width: 95vw; /* Set width to 95% of the viewport width */
-  margin-top: 10px;
+  width: 90%;
+  margin-top: 20px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.4); /* Slightly transparent white */
-  border-radius: 10px;
-  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
-}
-
-.input-form-container h2 {
-  margin-bottom: 10px;
-  text-align: center; /* Center the heading */
+  background-color: rgba(red, green, blue, alpha); /* Dark Red, matching table header */
+  border-radius: 12px;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.8);
+  animation: fadeIn 0.5s ease-out; /* Apply fadeIn animation */
 }
 
 .input-form-container form {
-  display: flex; /* Use flexbox */
-  flex-wrap: wrap; /* Allow wrapping of elements */
+  display: flex;
+  flex-wrap: wrap; /* Allow inputs to wrap if needed */
   justify-content: center; /* Center items horizontally */
 }
 
-.input-form-container input,
-.input-form-container button {
-  padding: 10px 20px;
-  margin: 5px; /* Add margin between elements */
-  border-radius: 5px;
+.input-form-container input {
+  width: calc(33.33% - 20px); /* Occupies one-third of container width with spacing */
+  padding: 12px 24px;
+  margin: 10px;
+  border-radius: 8px;
+  border: 1px solid #ff1744; /* Gradient Red, matching table header */
+  background-color: #31111e; /* Darker Red for even rows, matching table */
+  color: #fff; /* White text color, matching table */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle box shadow for consistency */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.input-form-container input:focus {
+  outline: none; /* Remove default focus outline */
+  background-color: #4a0c1e; /* Dark Red, matching table header */
+}
+
+.input-form-container input:hover {
+  background-color: #5e1529; /* Even darker red on hover */
+  background: linear-gradient(45deg, #ff3d00, #ff1744);
 }
 
 .input-form-container input {
-  flex: 1; /* Make input fields flexible */
-  border: 1px solid #000000; /* Add borders */
+  /* Existing input styles */
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease; /* Include transform transition */
+}
+
+.input-form-container input:hover {
+  background-color: #5e1529; /* Even darker red on hover */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add a glow effect on hover */
+  transform: translateY(-5px); /* Pop out the hovered column slightly */
+}
+
+.input-form-container input:focus {
+  outline: none; /* Remove default focus outline */
+  background-color: #4a0c1e; /* Dark Red, matching table header */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add a glow effect on focus */
 }
 
 .input-form-container button {
-  background-color: #ba2121; /* Match the color with the table header */
+  padding: 12px 34px;
+  border-radius: 8px;
+  background: linear-gradient(
+    45deg,
+    #ff3d00,
+    #ff1744
+  ); /* Gradient Red, matching table header */
   color: #fff;
   border: none;
   cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease; /* Include transform transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle box shadow */
 }
 
 .input-form-container button:hover {
-  background-color: #960000; /* Darken the color on hover */
+  background-color: #ff1744; /* Darker Red, matching table header gradient */
+  transform: translateY(-2px) scale(1.05); /* Pop out and scale up slightly on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Add a stronger shadow on hover */
+}
+
+.input-form-container button:active {
+  transform: translateY(1px) scale(0.98); /* Slight downward movement and scale down on click */
+  box-shadow: none; /* Remove box shadow on click */
+}
+
+/* Animation for input form */
+.input-form-container:hover {
+  transform: translateY(-5px); /* Elevate slightly on hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition */
 }
 
 .dot {

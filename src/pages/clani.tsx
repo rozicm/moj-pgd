@@ -12,14 +12,14 @@ export default function Clani() {
         <link rel="icon" href="/logo.png" />
       </Head>
       <div className="flex w-full flex-col items-center justify-center">
-        <div className="navbar">
+        <div className="navbar z-50">
           <Navbar />
         </div>
       </div>
       <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
-        
+        <div className="mx-auto mt-28 justify-center">
           <ClanTable />
-        
+        </div>
       </main>
     </>
   );

@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import Image from "next/image";
 import GCGP from "~/assets/img/GCGP.png";
 import { api } from "~/utils/api";
 
+interface EquipmentItem {
+  id: number;
+  naziv_opreme: string;
+  kolicina: number;
+  status_opreme: boolean;
+}
+
 export default function Oprema() {
-  const { data, error, isLoading } = api.post.get_oprema.useQuery();
+  const { data, error, isLoading, refetch } = api.post.get_oprema.useQuery();
+  const update = api.post.update_oprema_status.useMutation();
+
+  const handleStatusClick = async (
+    oprema_id: number,
+    status_opreme: boolean,
+  ) => {
+    const newStatus = !status_opreme; // Toggle the status
+    try {
+      await update.mutateAsync({ oprema_id, new_status: newStatus });
+      await refetch();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -34,7 +55,10 @@ export default function Oprema() {
           />
         </div>
 
-        <div className="custom-table-container mr-12 mt-10" style={{ maxHeight: "550px" }}>
+        <div
+          className="custom-table-container mr-12 mt-10"
+          style={{ maxHeight: "550px" }}
+        >
           <table className="custom-table">
             <thead>
               <tr>
@@ -45,31 +69,26 @@ export default function Oprema() {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
+              {data.map((item: EquipmentItem) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.naziv_opreme}</td>
                   <td>{item.kolicina}</td>
                   <td>
-                    {item.status_opreme ? (
-                      <span
-                        style={{
-                          color: "rgba(0, 255, 0, 1)",
-                          fontSize: "24px",
-                        }}
-                      >
-                        ●
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          color: "rgba(255, 0, 0, 1)",
-                          fontSize: "24px",
-                        }}
-                      >
-                        ●
-                      </span>
-                    )}
+                    <span
+                      style={{
+                        color: item.status_opreme
+                          ? "rgba(0, 255, 0, 1)"
+                          : "rgba(255, 0, 0, 1)",
+                        fontSize: "24px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        handleStatusClick(item.id, item.status_opreme)
+                      }
+                    >
+                      ●
+                    </span>
                   </td>
                 </tr>
               ))}

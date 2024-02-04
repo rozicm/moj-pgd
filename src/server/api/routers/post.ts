@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -8,10 +7,13 @@ import {
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure.query(({ ctx }) => {
-    // return {
-    //   greeting: `Hello ${input.text}`,
-    // };
-    return ctx.db.clan.findMany();
+    return ctx.db.clan.findMany({
+      orderBy: [
+        {
+          clan_id: "asc",
+        },
+      ],
+    });
   }),
 
   get_oprema: publicProcedure.query(({ ctx }) => {
@@ -20,27 +22,51 @@ export const postRouter = createTRPCRouter({
   get_voznja: publicProcedure.query(({ ctx }) => {
     return ctx.db.voznja.findMany();
   }),
-
-  create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
+  
+  update_oprema_status: publicProcedure
+    .input(
+      z.object({
+        oprema_id: z.number(),
+        new_status: z.boolean(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const { oprema_id, new_status } = input;
 
-      return ctx.db.post.create({
+      // Assuming ctx.db.oprema.update is a function to update the status of the oprema item
+      await ctx.db.oprema.update({
+        where: {
+          id: oprema_id,
+        },
         data: {
-          name: input.name,
-          createdBy: { connect: { id: ctx.session.user.id } },
+          status_opreme: new_status,
         },
       });
-    }),
 
-  getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
-  }),
+      return "Status updated successfully";
+    }),
+  create: publicProcedure
+    .input(
+      z.object({
+        clan_id: z.number().min(1),
+        ime: z.string().min(1),
+        priimek: z.string().min(1),
+        datum_rojstva: z.date(),
+        specialnosti: z.string().min(1),
+        kraj_bivanja: z.string().min(1),
+        zdravniski: z.date().nullable(),
+        funkcija: z.string().min(1),
+        cin: z.string().min(1),
+      }),
+    )
+
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
+
+      return ctx.db.clan.create({
+        data: input,
+      });
+    }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";

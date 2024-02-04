@@ -1,8 +1,7 @@
-// InputForm.tsx
 import React, { useState } from "react";
 
 interface DataRow {
-  clan_id: string;
+  clan_id: number;
   ime: string;
   priimek: string;
   datum_rojstva: Date;
@@ -18,7 +17,7 @@ interface InputFormProps {
 }
 
 const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
-  const [clanId, setClanId] = useState<string>("");
+  const [clanId, setClanId] = useState<number | null>(null);
   const [ime, setIme] = useState<string>("");
   const [priimek, setPriimek] = useState<string>("");
   const [datumRojstva, setDatumRojstva] = useState<string>("");
@@ -31,7 +30,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newDataRow: DataRow = {
-      clan_id: clanId,
+      clan_id: clanId ?? 0,
       ime,
       priimek,
       datum_rojstva: new Date(datumRojstva),
@@ -43,7 +42,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
     };
     onAdd(newDataRow);
     // Clear the form fields after adding the row
-    setClanId("");
+    setClanId(null);
     setIme("");
     setPriimek("");
     setDatumRojstva("");
@@ -55,14 +54,16 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
   };
 
   return (
-    <div className="input-form-container">
-      <h2>Dodajanje novega člana</h2>
+    <div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Clan ID"
-          value={clanId}
-          onChange={(e) => setClanId(e.target.value)}
+          placeholder="ID člana"
+          value={clanId ?? ""} // ensure value is not null
+          onChange={(e) => {
+            const parsedValue = parseInt(e.target.value);
+            setClanId(isNaN(parsedValue) ? null : parsedValue);
+          }}
         />
         <input
           type="text"
@@ -78,7 +79,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
         />
         <input
           type="text"
-          placeholder="Datum rojstva (YYYY-MM-DD)"
+          placeholder="Datum rojstva"
           value={datumRojstva}
           onChange={(e) => setDatumRojstva(e.target.value)}
         />
@@ -108,7 +109,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
         />
         <input
           type="text"
-          placeholder="CIN"
+          placeholder="Čin"
           value={cin}
           onChange={(e) => setCin(e.target.value)}
         />

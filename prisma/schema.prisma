@@ -94,7 +94,7 @@ model Voznja {
 }
 
 model Clan {
-    clan_id        String           @id @default(cuid())
+    clan_id        Int           @id
     ime            String
     priimek        String
     datum_rojstva  DateTime
@@ -115,7 +115,7 @@ model Intervencija {
 
 model ClanIntervencija {
     id              Int               @id @default(autoincrement())
-    clan_id         String
+    clan_id         Int
     intervencija_id Int
 
     clan            Clan              @relation(fields: [clan_id], references: [clan_id])
