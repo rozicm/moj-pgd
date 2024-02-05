@@ -24,6 +24,11 @@ export const postRouter = createTRPCRouter({
     return ctx.db.voznja.findMany();
   }),
 
+  get_intervencija: publicProcedure.query(({ ctx }) => {
+    return ctx.db.intervencija.findMany();
+  }),
+
+
   update_oprema_status: publicProcedure
     .input(
       z.object({
@@ -84,6 +89,25 @@ export const postRouter = createTRPCRouter({
       console.log(input);
 
       return ctx.db.voznja.create({
+        data: input,
+      });
+    }),
+    
+    add_intervencija: publicProcedure
+    .input(
+      z.object({
+        intervencija_id: z.number().min(1),
+        datum: z.date(),
+        tip: z.string(),
+        st_clanov: z.number(),
+        opis: z.string(),
+      }),
+    )
+
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
+
+      return ctx.db.intervencija.create({
         data: input,
       });
     }),

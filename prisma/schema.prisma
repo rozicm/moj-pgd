@@ -109,6 +109,9 @@ model Clan {
 model Intervencija {
     intervencija_id Int              @id
     datum           DateTime
+    tip             String
+    st_clanov       Int
+    opis            String
     clanIntervencije ClanIntervencija[]
 }
 

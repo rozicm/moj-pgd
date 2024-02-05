@@ -1,8 +1,33 @@
-import React from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
+import { api } from "~/utils/api";
+import React, { useState, useEffect } from "react";
+import InputIntervencija from "~/components/InputIntervencija";
+
+interface IntervencijaDataRow {
+  intervencija_id: number;
+  datum: Date;
+  tip: string;
+  st_clanov: number;
+  opis: string;
+}
 
 export default function Intervencije() {
+  const { data, error, isLoading, refetch } = api.post.get_intervencija.useQuery();
+  const createNew = api.post.add_intervencija.useMutation();
+  const handleAddMember = async (newMemberData: IntervencijaDataRow) => {
+    try {
+      await createNew.mutateAsync(newMemberData);
+      await refetch();
+      console.log(newMemberData);
+      console.log("New member added:");
+    } catch (error) {
+      console.error("Error adding new member:");
+    }
+  };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <>
       <Head>
@@ -15,7 +40,36 @@ export default function Intervencije() {
           <Navbar />
         </div>
       </div>
-      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta"></main>
+      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+      <div className="custom-table-container mt-16 mb-6 " style={{ maxHeight: "365px" }}>
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>Intervencija ID</th>
+                <th>Datum</th>
+                <th>Tip</th>
+                <th>Število članov</th>
+                <th>Opis</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((intervencija) => (
+                <tr key={intervencija.intervencija_id}>
+                  <td>{intervencija.intervencija_id}</td>
+                  <td>{intervencija.datum.toLocaleDateString()}</td>
+                  <td>{intervencija.tip}</td>
+                  <td>{intervencija.st_clanov}</td>
+                  <td>{intervencija.opis}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="input-form-container mx-auto my-10 flex flex-col items-center">
+  <InputIntervencija onAdd={handleAddMember} />
+</div>
+
+      </main>
     </>
   );
 }
