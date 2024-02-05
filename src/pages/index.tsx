@@ -20,7 +20,7 @@ export default function Home() {
         </Head>
         <div className="flex flex-col items-center justify-center">
           <div className="animate-float mb-32">
-            <Image src="/logo.png" alt="Logo" width={350} height={350} />
+            <Image src="/logo.png" alt="Logo" width={320} height={320} />
           </div>
           <button
             onClick={() => signIn()}
