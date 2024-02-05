@@ -3,7 +3,7 @@ import Navbar from "~/components/Navbar";
 import { api } from "~/utils/api";
 import React, { useState, useEffect } from "react";
 import InputIntervencija from "~/components/InputIntervencija";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 interface IntervencijaDataRow {
   intervencija_id: number;
