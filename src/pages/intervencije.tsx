@@ -3,6 +3,8 @@ import Navbar from "~/components/Navbar";
 import { api } from "~/utils/api";
 import React, { useState, useEffect } from "react";
 import InputIntervencija from "~/components/InputIntervencija";
+import { signIn, useSession } from "next-auth/react";
+
 
 interface IntervencijaDataRow {
   intervencija_id: number;
@@ -15,6 +17,19 @@ interface IntervencijaDataRow {
 export default function Intervencije() {
   const { data, error, isLoading, refetch } = api.post.get_intervencija.useQuery();
   const createNew = api.post.add_intervencija.useMutation();
+  const { data: sessionData } = useSession();
+
+  React.useEffect(() => {
+    if (!sessionData) {
+      // If user is not logged in, redirect to index page
+      window.location.href = "/";
+    }
+  }, [sessionData]);
+
+  if (!sessionData) {
+    // If user is not logged in, redirecting so above useEffect triggers
+    return null;
+  }
   const handleAddMember = async (newMemberData: IntervencijaDataRow) => {
     try {
       await createNew.mutateAsync(newMemberData);

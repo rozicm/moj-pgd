@@ -304,3 +304,17 @@ input[type="date"]:focus:before,
 input[type="date"]:valid:before {
   content: "";
 }
+/* styles.css */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(40px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}

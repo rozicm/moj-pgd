@@ -3,6 +3,8 @@ import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import { api } from "~/utils/api";
 import InputVoznik from "~/components/InputVoznik";
+import { useSession } from "next-auth/react";
+
 
 interface VoznjaDataRow {
   voznja_id: number;
@@ -18,6 +20,17 @@ export default function Voznje() {
   const createNew = api.post.add_voznja.useMutation();
   const [lastVoznjaId, setLastVoznjaId] = useState<number>(0);
   const [lastKonKm, setLastKonKm] = useState<number>(0);
+
+  const { data: sessionData } = useSession();
+
+  React.useEffect(() => {
+    if (!sessionData) {
+      // If user is not logged in, redirect to index page
+      window.location.href = "/";
+    }
+  }, [sessionData]);
+
+  
 
   const handleAddMember = async (newMemberData: VoznjaDataRow) => {
     try {
@@ -46,6 +59,10 @@ export default function Voznje() {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+  if (!sessionData) {
+    // If user is not logged in, redirecting so above useEffect triggers
+    return null;
+  }
 
   return (
     <>

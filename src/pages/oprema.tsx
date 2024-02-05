@@ -1,7 +1,9 @@
+import React from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import Image from "next/image";
 import GCGP from "~/assets/img/GCGP.png";
+import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 
 interface EquipmentItem {
@@ -14,10 +16,18 @@ interface EquipmentItem {
 export default function Oprema() {
   const { data, error, isLoading, refetch } = api.post.get_oprema.useQuery();
   const update = api.post.update_oprema_status.useMutation();
+  const { data: sessionData } = useSession();
+
+  React.useEffect(() => {
+    if (!sessionData) {
+      // If user is not logged in, redirect to index page
+      window.location.href = "/";
+    }
+  }, [sessionData]);
 
   const handleStatusClick = async (
     oprema_id: number,
-    status_opreme: boolean,
+    status_opreme: boolean
   ) => {
     const newStatus = !status_opreme; // Toggle the status
     try {
@@ -27,6 +37,11 @@ export default function Oprema() {
       console.error("Error updating status:", error);
     }
   };
+
+  if (!sessionData) {
+    // If user is not logged in, redirecting so above useEffect triggers
+    return null;
+  }
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
