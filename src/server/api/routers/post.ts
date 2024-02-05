@@ -21,13 +21,18 @@ export const postRouter = createTRPCRouter({
   }),
 
   get_voznja: publicProcedure.query(({ ctx }) => {
-    return ctx.db.voznja.findMany();
+    return ctx.db.voznja.findMany({
+      orderBy: [
+        {
+          voznja_id: "desc",
+        },
+      ],
+    });
   }),
 
   get_intervencija: publicProcedure.query(({ ctx }) => {
     return ctx.db.intervencija.findMany();
   }),
-
 
   update_oprema_status: publicProcedure
     .input(
@@ -38,8 +43,6 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { oprema_id, new_status } = input;
-
-      // Assuming ctx.db.oprema.update is a function to update the status of the oprema item
       await ctx.db.oprema.update({
         where: {
           id: oprema_id,
@@ -92,8 +95,8 @@ export const postRouter = createTRPCRouter({
         data: input,
       });
     }),
-    
-    add_intervencija: publicProcedure
+
+  add_intervencija: publicProcedure
     .input(
       z.object({
         intervencija_id: z.number().min(1),

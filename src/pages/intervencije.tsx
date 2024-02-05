@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import InputIntervencija from "~/components/InputIntervencija";
 import { signIn, useSession } from "next-auth/react";
 
-
 interface IntervencijaDataRow {
   intervencija_id: number;
   datum: Date;
@@ -17,17 +16,27 @@ interface IntervencijaDataRow {
 export default function Intervencije() {
   const { data, error, isLoading, refetch } = api.post.get_intervencija.useQuery();
   const createNew = api.post.add_intervencija.useMutation();
+  const [lastIntervencijaId, setLastIntervencijaId] = useState<number>(0);
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
     if (!sessionData) {
-      // If user is not logged in, redirect to index page
       window.location.href = "/";
     }
   }, [sessionData]);
 
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const lastData = data[data.length - 1];
+      if (lastData) {
+        setLastIntervencijaId(lastData.intervencija_id + 1);
+        console.log("Last intervencija_id:", lastData.intervencija_id + 1);
+        console.error("Error: lastData is undefined");
+      }
+    }
+  }, [data]);
+
   if (!sessionData) {
-    // If user is not logged in, redirecting so above useEffect triggers
     return null;
   }
   const handleAddMember = async (newMemberData: IntervencijaDataRow) => {
@@ -56,7 +65,10 @@ export default function Intervencije() {
         </div>
       </div>
       <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
-      <div className="custom-table-container mt-16 mb-6 " style={{ maxHeight: "365px" }}>
+        <div
+          className="custom-table-container mb-6 mt-16 "
+          style={{ maxHeight: "365px" }}
+        >
           <table className="custom-table">
             <thead>
               <tr>
@@ -81,9 +93,11 @@ export default function Intervencije() {
           </table>
         </div>
         <div className="input-form-container mx-auto my-10 flex flex-col items-center">
-  <InputIntervencija onAdd={handleAddMember} />
-</div>
-
+          <InputIntervencija
+            lastIntervencijaId={lastIntervencijaId}
+            onAdd={handleAddMember}
+          />
+        </div>
       </main>
     </>
   );

@@ -5,8 +5,6 @@ import Image from "next/image";
 // import { api } from "~/utils/api";
 
 const Navbar: React.FC = () => {
-  // const { data } = api.post.hello.useQuery();
-  // console.log(data?.[1]);
   return (
     <nav>
       <div className="navbar-container backdrop-blur-sm">

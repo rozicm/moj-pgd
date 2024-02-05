@@ -41,7 +41,6 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
       cin,
     };
     onAdd(newDataRow);
-    // Clear the form fields after adding the row
     setClanId(null);
     setIme("");
     setPriimek("");
@@ -59,7 +58,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
         <input
           type="text"
           placeholder="ID člana"
-          value={clanId ?? ""} // ensure value is not null
+          value={clanId ?? ""}
           onChange={(e) => {
             const parsedValue = parseInt(e.target.value);
             setClanId(isNaN(parsedValue) ? null : parsedValue);
@@ -85,9 +84,9 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
           onChange={(e) => setDatumRojstva(e.target.value)}
           onFocus={(e) => {
             if (datumRojstva !== "") {
-              setDatumRojstva(""); // Clear the value when focused if it's not already empty
+              setDatumRojstva("");
             }
-            e.target.type = "date"; // Change the input type to 'date' when focused
+            e.target.type = "date";
           }}
         />
         <input
@@ -109,9 +108,9 @@ const InputForm: React.FC<InputFormProps> = ({ onAdd }) => {
           onChange={(e) => setZdravniski(e.target.value)}
           onFocus={(e) => {
             if (zdravniski !== "") {
-              setZdravniski(""); // Clear the value when focused if it's not already empty
+              setZdravniski("");
             }
-            e.target.type = "date"; // Change the input type to 'date' when focused
+            e.target.type = "date";
           }}
         />
         <input

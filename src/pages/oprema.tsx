@@ -27,7 +27,7 @@ export default function Oprema() {
 
   const handleStatusClick = async (
     oprema_id: number,
-    status_opreme: boolean
+    status_opreme: boolean,
   ) => {
     const newStatus = !status_opreme; // Toggle the status
     try {
@@ -76,7 +76,7 @@ export default function Oprema() {
           <table className="custom-table">
             <thead>
               <tr>
-                <th>Oprema ID</th>
+                <th className="w-2/12">Oprema ID</th>
                 <th>Ime opreme</th>
                 <th>Količina</th>
                 <th>Status</th>

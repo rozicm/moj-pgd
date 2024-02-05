@@ -25,7 +25,6 @@ export default function Voznje() {
 
   React.useEffect(() => {
     if (!sessionData) {
-      // If user is not logged in, redirect to index page
       window.location.href = "/";
     }
   }, [sessionData]);
@@ -45,22 +44,22 @@ export default function Voznje() {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const lastData = data[data.length - 1];
-      if (lastData) {
-        setLastVoznjaId(lastData.voznja_id + 1);
-        setLastKonKm(lastData.kon_km);
-        console.log("Last voznja_id:", lastData.voznja_id + 1);
-        console.log("Last kon_km:", lastData.kon_km);
+      const firstData = data[0];
+      if (firstData) {
+        setLastVoznjaId(firstData.voznja_id + 1);
+        setLastKonKm(firstData.kon_km);
+        console.log("First voznja_id:", firstData.voznja_id);
+        console.log("First kon_km:", firstData.kon_km);
       } else {
-        console.error("Error: lastData is undefined");
+        console.error("Error: firstData is undefined");
       }
     }
   }, [data]);
 
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!sessionData) {
-    // If user is not logged in, redirecting so above useEffect triggers
     return null;
   }
 

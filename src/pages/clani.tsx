@@ -4,21 +4,19 @@ import Navbar from "~/components/Navbar";
 import ClanTable from "~/components/ClanTable";
 import { useSession } from "next-auth/react";
 
-
 export default function Clani() {
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
     if (!sessionData) {
-      // If user is not logged in, redirect to index page
       window.location.href = "/";
     }
   }, [sessionData]);
 
   if (!sessionData) {
-    // If user is not logged in, redirecting so above useEffect triggers
     return null;
   }
+
   return (
     <>
       <Head>

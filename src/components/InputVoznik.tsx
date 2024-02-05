@@ -45,9 +45,7 @@ const InputVoznik: React.FC<InputFormProps> = ({
       voznik,
     };
     onAdd(newVoznjaDataRow);
-    // Increment voznjaId for the next entry
     setVoznjaId(voznjaId + 1);
-    // Clear the form fields after adding the row
     setDatum("");
     setZacKm(0);
     setKonKm(0);
@@ -66,9 +64,9 @@ const InputVoznik: React.FC<InputFormProps> = ({
           onChange={(e) => setDatum(e.target.value)}
           onFocus={(e) => {
             if (datum !== "") {
-              setDatum(""); // Clear the value when focused if it's not already empty
+              setDatum("");
             }
-            e.target.type = "date"; // Change the input type to 'date' when focused
+            e.target.type = "date";
           }}
         />
         <input

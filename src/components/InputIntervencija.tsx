@@ -10,14 +10,23 @@ interface IntervencijaDataRow {
 
 interface InputFormProps {
   onAdd: (newDataRow: IntervencijaDataRow) => void;
+  lastIntervencijaId: number;
 }
 
-const InputIntervencija: React.FC<InputFormProps> = ({ onAdd }) => {
-  const [intervencijaId, setIntervencijaId] = useState<number | null>(null);
+const InputIntervencija: React.FC<InputFormProps> = ({
+  lastIntervencijaId,
+  onAdd,
+}) => {
+  const [intervencijaId, setIntervencijaId] =
+    useState<number>(lastIntervencijaId);
   const [datum, setDatum] = useState<string>("");
   const [tip, setTip] = useState<string>("");
   const [stClanov, setStClanov] = useState<number | null>(null);
   const [opis, setOpis] = useState<string>("");
+
+  useEffect(() => {
+    setIntervencijaId(lastIntervencijaId);
+  }, [lastIntervencijaId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,8 +38,7 @@ const InputIntervencija: React.FC<InputFormProps> = ({ onAdd }) => {
       opis,
     };
     onAdd(newDataRow);
-    // Clear the form fields after adding the row
-    setIntervencijaId(null);
+    setIntervencijaId((prevId) => prevId + 1);
     setDatum("");
     setTip("");
     setStClanov(null);
@@ -44,10 +52,14 @@ const InputIntervencija: React.FC<InputFormProps> = ({ onAdd }) => {
           <input
             type="text"
             placeholder="ID intervencije"
-            value={intervencijaId ?? ""} // ensure value is not null
+            value={intervencijaId ?? ""}
             onChange={(e) => {
               const parsedValue = parseInt(e.target.value);
-              setIntervencijaId(isNaN(parsedValue) ? null : parsedValue);
+              if (!isNaN(parsedValue)) {
+                setStClanov(parsedValue);
+              } else {
+                setStClanov(null);
+              }
             }}
           />
           <input
@@ -57,9 +69,9 @@ const InputIntervencija: React.FC<InputFormProps> = ({ onAdd }) => {
             onChange={(e) => setDatum(e.target.value)}
             onFocus={(e) => {
               if (datum !== "") {
-                setDatum(""); // Clear the value when focused if it's not already empty
+                setDatum("");
               }
-              e.target.type = "date"; // Change the input type to 'date' when focused
+              e.target.type = "date";
             }}
           />
           <input
@@ -72,7 +84,7 @@ const InputIntervencija: React.FC<InputFormProps> = ({ onAdd }) => {
           <input
             type="text"
             placeholder="Število članov"
-            value={stClanov ?? ""} // ensure value is not null
+            value={stClanov ?? ""}
             onChange={(e) => {
               const parsedValue = parseInt(e.target.value);
               setStClanov(isNaN(parsedValue) ? null : parsedValue);
@@ -81,6 +93,12 @@ const InputIntervencija: React.FC<InputFormProps> = ({ onAdd }) => {
           <input
             type="text"
             placeholder="Opis"
+            value={opis}
+            onChange={(e) => setOpis(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Gasilci"
             value={opis}
             onChange={(e) => setOpis(e.target.value)}
           />
