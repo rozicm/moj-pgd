@@ -20,7 +20,6 @@ export default function Oprema() {
 
   React.useEffect(() => {
     if (!sessionData) {
-      // If user is not logged in, redirect to index page
       window.location.href = "/";
     }
   }, [sessionData]);
@@ -29,7 +28,7 @@ export default function Oprema() {
     oprema_id: number,
     status_opreme: boolean,
   ) => {
-    const newStatus = !status_opreme; // Toggle the status
+    const newStatus = !status_opreme;
     try {
       await update.mutateAsync({ oprema_id, new_status: newStatus });
       await refetch();
@@ -39,7 +38,6 @@ export default function Oprema() {
   };
 
   if (!sessionData) {
-    // If user is not logged in, redirecting so above useEffect triggers
     return null;
   }
 
