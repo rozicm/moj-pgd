@@ -172,7 +172,12 @@
   width: 90%;
   margin-top: 20px;
   padding: 20px;
-  background-color: rgba(red, green, blue, alpha); /* Dark Red, matching table header */
+  background-color: rgba(
+    red,
+    green,
+    blue,
+    alpha
+  ); /* Dark Red, matching table header */
   border-radius: 12px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.8);
   animation: fadeIn 0.5s ease-out; /* Apply fadeIn animation */
@@ -185,7 +190,9 @@
 }
 
 .input-form-container input {
-  width: calc(33.33% - 20px); /* Occupies one-third of container width with spacing */
+  width: calc(
+    33.33% - 20px
+  ); /* Occupies one-third of container width with spacing */
   padding: 12px 24px;
   margin: 10px;
   border-radius: 8px;
@@ -193,7 +200,10 @@
   background-color: #31111e; /* Darker Red for even rows, matching table */
   color: #fff; /* White text color, matching table */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle box shadow for consistency */
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease; /* Smooth transitions */
 }
 
 .input-form-container input:focus {
@@ -307,7 +317,8 @@ input[type="date"]:valid:before {
 /* styles.css */
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(40px);
   }
   50% {

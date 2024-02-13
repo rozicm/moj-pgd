@@ -38,7 +38,7 @@ export default function Oprema() {
   };
 
   if (!sessionData) {
-    return null;
+    return <div>Loading...</div>;
   }
 
   if (isLoading) return <div>Loading...</div>;

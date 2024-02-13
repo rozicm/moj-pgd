@@ -19,16 +19,16 @@ const Navbar: React.FC = () => {
             <Link href="/">MojPGD</Link>
           </span>
         </div>
-        <ul className="nav-links">
+        <ul className="nav-links pr-20">
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
             <Link href="/clani">Člani</Link>
           </li>
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
             <Link href="/oprema">Oprema</Link>
           </li>
-          <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+          {/* <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
             <Link href="/finance">Finance</Link>
-          </li>
+          </li> */} 
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
             <Link href="/voznje">Vožnje</Link>
           </li>
