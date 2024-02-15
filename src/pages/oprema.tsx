@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import Image from "next/image";
@@ -11,6 +11,7 @@ interface EquipmentItem {
   naziv_opreme: string;
   kolicina: number;
   status_opreme: boolean;
+  opis?: string; // New field for description
 }
 
 export default function Oprema() {
@@ -82,6 +83,7 @@ export default function Oprema() {
                 <th>Ime opreme</th>
                 <th>Količina</th>
                 <th>Status</th>
+                <th>Opis</th> {/* New table header for Description */}
               </tr>
             </thead>
             <tbody>

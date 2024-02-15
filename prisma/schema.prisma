@@ -74,6 +74,7 @@ model Oprema {
     naziv_opreme    String
     kolicina        Int
     status_opreme   Boolean
+    opis            String
 }
 
 model Finance {

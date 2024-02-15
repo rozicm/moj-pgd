@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
-import { api } from "~/utils/api";
-import React, { useState, useEffect } from "react";
 import InputIntervencija from "~/components/InputIntervencija";
-import { useSession } from "next-auth/react";
+import { api } from "~/utils/api";
 
 interface IntervencijaDataRow {
   intervencija_id: number;
@@ -17,8 +17,19 @@ export default function Intervencije() {
   const { data, error, isLoading, refetch } =
     api.post.get_intervencija.useQuery();
   const createNew = api.post.add_intervencija.useMutation();
+  const deleteRows = api.post.delete_intervencija.useMutation();
   const [lastIntervencijaId, setLastIntervencijaId] = useState<number>(0);
   const { data: sessionData } = useSession();
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const lastData = data[data.length - 1];
+      if (lastData) {
+        setLastIntervencijaId(lastData.intervencija_id + 1);
+      }
+    }
+  }, [data]);
 
   React.useEffect(() => {
     const delayRedirect = setTimeout(() => {
@@ -30,32 +41,38 @@ export default function Intervencije() {
     return () => clearTimeout(delayRedirect);
   }, [sessionData]);
 
-  useEffect(() => {
-    if (data && data.length > 0) {
-      const lastData = data[data.length - 1];
-      if (lastData) {
-        setLastIntervencijaId(lastData.intervencija_id + 1);
-        console.log("Last intervencija_id:", lastData.intervencija_id + 1);
-        console.error("Error: lastData is undefined");
-      }
-    }
-  }, [data]);
-
-  if (!sessionData) {
-    return null;
-  }
   const handleAddMember = async (newMemberData: IntervencijaDataRow) => {
     try {
       await createNew.mutateAsync(newMemberData);
       await refetch();
-      console.log(newMemberData);
-      console.log("New member added:");
+      console.log("New member added:", newMemberData);
     } catch (error) {
-      console.error("Error adding new member:");
+      console.error("Error adding new member:", error);
     }
   };
+
+  const handleCheckboxChange = (intervencijaId: number) => {
+    if (selectedRows.includes(intervencijaId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== intervencijaId));
+    } else {
+      setSelectedRows([...selectedRows, intervencijaId]);
+    }
+  };
+
+  const handleDeleteSelectedRows = async () => {
+    try {
+      await deleteRows.mutateAsync(selectedRows);
+      await refetch();
+      setSelectedRows([]);
+      console.log("Selected rows deleted successfully");
+    } catch (error) {
+      console.error("Error deleting selected rows:", error);
+    }
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+  if (!sessionData) return null;
 
   return (
     <>
@@ -69,14 +86,15 @@ export default function Intervencije() {
           <Navbar />
         </div>
       </div>
-      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
         <div
-          className="custom-table-container mb-6 mt-16 "
-          style={{ maxHeight: "365px" }}
+          className="custom-table-container mb-6 mt-24 "
+          style={{ maxHeight: "330px" }}
         >
           <table className="custom-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Intervencija ID</th>
                 <th>Datum</th>
                 <th>Tip</th>
@@ -87,6 +105,37 @@ export default function Intervencije() {
             <tbody>
               {data.map((intervencija) => (
                 <tr key={intervencija.intervencija_id}>
+                  <td>
+                    <div className="checkbox-wrapper-31">
+                      <input
+                        type="checkbox"
+                        onChange={() =>
+                          handleCheckboxChange(intervencija.intervencija_id)
+                        }
+                        checked={selectedRows.includes(
+                          intervencija.intervencija_id,
+                        )}
+                      />
+                      <svg viewBox="0 0 35.6 35.6">
+                        <circle
+                          className="background"
+                          cx="17.8"
+                          cy="17.8"
+                          r="9.8"
+                        ></circle>
+                        <circle
+                          className="stroke"
+                          cx="17.8"
+                          cy="17.8"
+                          r="11.37"
+                        ></circle>
+                        <polyline
+                          className="check"
+                          points="11.78 18.12 15.55 22.23 25.17 12.87"
+                        ></polyline>
+                      </svg>
+                    </div>
+                  </td>
                   <td>{intervencija.intervencija_id}</td>
                   <td>{intervencija.datum.toLocaleDateString()}</td>
                   <td>{intervencija.tip}</td>
@@ -96,6 +145,17 @@ export default function Intervencije() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div
+          className="transform rounded-md px-9 py-3 no-underline transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110"
+          style={{
+            color: "white",
+            background: "linear-gradient(45deg, #ff3d00, #ff1744)",
+          }}
+        >
+          <button onClick={handleDeleteSelectedRows}>
+            Izbriši izbrani zapis
+          </button>
         </div>
         <div className="input-form-container mx-auto my-10 flex flex-col items-center">
           <InputIntervencija

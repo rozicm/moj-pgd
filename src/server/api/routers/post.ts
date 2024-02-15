@@ -10,7 +10,7 @@ export const postRouter = createTRPCRouter({
     return ctx.db.clan.findMany({
       orderBy: [
         {
-          clan_id: "asc",
+          priimek: "asc",
         },
       ],
     });
@@ -31,7 +31,13 @@ export const postRouter = createTRPCRouter({
   }),
 
   get_intervencija: publicProcedure.query(({ ctx }) => {
-    return ctx.db.intervencija.findMany();
+    return ctx.db.intervencija.findMany({
+      orderBy: [
+        {
+          intervencija_id: "desc",
+        },
+      ],
+    });
   }),
 
   update_oprema_status: publicProcedure
@@ -54,6 +60,8 @@ export const postRouter = createTRPCRouter({
 
       return "Status updated successfully";
     }),
+
+
   create: publicProcedure
     .input(
       z.object({
@@ -115,12 +123,8 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-    delete_voznja: publicProcedure
-    .input(
-      z.array(
-        z.number().min(1),
-      ),
-    )
+  delete_voznja: publicProcedure
+    .input(z.array(z.number().min(1)))
     .mutation(async ({ ctx, input }) => {
       const deletedRowCount = await ctx.db.voznja.deleteMany({
         where: {
@@ -133,6 +137,33 @@ export const postRouter = createTRPCRouter({
       return `Deleted ${deletedRowCount.count} rows successfully`;
     }),
 
+  delete_clan: publicProcedure
+    .input(z.array(z.number().min(1)))
+    .mutation(async ({ ctx, input }) => {
+      const deletedRowCount = await ctx.db.clan.deleteMany({
+        where: {
+          clan_id: {
+            in: input,
+          },
+        },
+      });
+
+      return `Deleted ${deletedRowCount.count} rows successfully`;
+    }),
+
+  delete_intervencija: publicProcedure
+    .input(z.array(z.number().min(1)))
+    .mutation(async ({ ctx, input }) => {
+      const deletedRowCount = await ctx.db.intervencija.deleteMany({
+        where: {
+          intervencija_id: {
+            in: input,
+          },
+        },
+      });
+
+      return `Deleted ${deletedRowCount.count} rows successfully`;
+    }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
