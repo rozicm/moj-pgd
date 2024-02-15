@@ -8,9 +8,13 @@ export default function Clani() {
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
-    if (!sessionData) {
-      window.location.href = "/";
-    }
+    const delayRedirect = setTimeout(() => {
+      if (!sessionData) {
+        window.location.href = "/";
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayRedirect);
   }, [sessionData]);
 
   if (!sessionData) {

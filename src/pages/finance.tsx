@@ -3,14 +3,17 @@ import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import { useSession } from "next-auth/react";
 
-
 export default function Finance() {
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
-    if (!sessionData) {
-      window.location.href = "/";
-    }
+    const delayRedirect = setTimeout(() => {
+      if (!sessionData) {
+        window.location.href = "/";
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayRedirect);
   }, [sessionData]);
 
   if (!sessionData) {

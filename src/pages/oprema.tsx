@@ -19,9 +19,13 @@ export default function Oprema() {
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
-    if (!sessionData) {
-      window.location.href = "/";
-    }
+    const delayRedirect = setTimeout(() => {
+      if (!sessionData) {
+        window.location.href = "/";
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayRedirect);
   }, [sessionData]);
 
   const handleStatusClick = async (

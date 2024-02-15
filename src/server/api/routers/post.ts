@@ -115,6 +115,25 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
+    delete_voznja: publicProcedure
+    .input(
+      z.array(
+        z.number().min(1),
+      ),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const deletedRowCount = await ctx.db.voznja.deleteMany({
+        where: {
+          voznja_id: {
+            in: input,
+          },
+        },
+      });
+
+      return `Deleted ${deletedRowCount.count} rows successfully`;
+    }),
+
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

@@ -5,7 +5,6 @@ import { api } from "~/utils/api";
 import InputVoznik from "~/components/InputVoznik";
 import { useSession } from "next-auth/react";
 
-
 interface VoznjaDataRow {
   voznja_id: number;
   datum: Date;
@@ -18,18 +17,23 @@ interface VoznjaDataRow {
 export default function Voznje() {
   const { data, error, isLoading, refetch } = api.post.get_voznja.useQuery();
   const createNew = api.post.add_voznja.useMutation();
+  const deleteRows: ReturnType<typeof api.post.delete_voznja.useMutation> =
+    api.post.delete_voznja.useMutation();
   const [lastVoznjaId, setLastVoznjaId] = useState<number>(0);
   const [lastKonKm, setLastKonKm] = useState<number>(0);
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
-    if (!sessionData) {
-      window.location.href = "/";
-    }
-  }, [sessionData]);
+    const delayRedirect = setTimeout(() => {
+      if (!sessionData) {
+        window.location.href = "/";
+      }
+    }, 1000);
 
-  
+    return () => clearTimeout(delayRedirect);
+  }, [sessionData]);
 
   const handleAddMember = async (newMemberData: VoznjaDataRow) => {
     try {
@@ -56,6 +60,24 @@ export default function Voznje() {
     }
   }, [data]);
 
+  const handleCheckboxChange = (voznjaId: number) => {
+    if (selectedRows.includes(voznjaId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== voznjaId));
+    } else {
+      setSelectedRows([...selectedRows, voznjaId]);
+    }
+  };
+
+  const handleDeleteSelectedRows = async () => {
+    try {
+      await deleteRows.mutateAsync(selectedRows);
+      await refetch();
+      setSelectedRows([]);
+      console.log("Selected rows deleted successfully");
+    } catch (error) {
+      console.error("Error deleting selected rows:", error);
+    }
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -76,10 +98,14 @@ export default function Voznje() {
         </div>
       </div>
       <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
-        <div className="custom-table-container mt-16 mb-6 " style={{ maxHeight: "365px" }}>
+        <div
+          className="custom-table-container mb-6 mt-16 "
+          style={{ maxHeight: "330px" }}
+        >
           <table className="custom-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Voznja ID</th>
                 <th>Datum</th>
                 <th>Začetni kilometri</th>
@@ -91,6 +117,33 @@ export default function Voznje() {
             <tbody>
               {data.map((voznja) => (
                 <tr key={voznja.voznja_id}>
+                  <td>
+                    <div className="checkbox-wrapper-31">
+                      <input
+                        type="checkbox"
+                        onChange={() => handleCheckboxChange(voznja.voznja_id)}
+                        checked={selectedRows.includes(voznja.voznja_id)}
+                      />
+                      <svg viewBox="0 0 35.6 35.6">
+                        <circle
+                          className="background"
+                          cx="17.8"
+                          cy="17.8"
+                          r="9.8"
+                        ></circle>
+                        <circle
+                          className="stroke"
+                          cx="17.8"
+                          cy="17.8"
+                          r="11.37"
+                        ></circle>
+                        <polyline
+                          className="check"
+                          points="11.78 18.12 15.55 22.23 25.17 12.87"
+                        ></polyline>
+                      </svg>
+                    </div>
+                  </td>
                   <td>{voznja.voznja_id}</td>
                   <td>{voznja.datum.toLocaleDateString()}</td>
                   <td>{voznja.zac_km}</td>
@@ -102,13 +155,28 @@ export default function Voznje() {
             </tbody>
           </table>
         </div>
+        <div
+          className={`transform rounded-md px-9 py-3 no-underline transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110 ${
+            sessionData
+              ? "bg-red-600"
+              : "from-red-600 to-red-900 bg-gradient-to-tr"
+          }`}
+          style={{
+            color: "white",
+            background: "linear-gradient(45deg, #ff3d00, #ff1744)",
+          }}
+        >
+          <button onClick={handleDeleteSelectedRows}>
+            Izbriši izbrani zapis
+          </button>
+        </div>
+
         <div className="input-form-container mx-auto">
-        
-            <InputVoznik
-              lastVoznjaId={lastVoznjaId}
-              lastKonKm={lastKonKm}
-              onAdd={handleAddMember}
-            />
+          <InputVoznik
+            lastVoznjaId={lastVoznjaId}
+            lastKonKm={lastKonKm}
+            onAdd={handleAddMember}
+          />
         </div>
       </main>
     </>

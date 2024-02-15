@@ -23,7 +23,13 @@ const InputVoznik: React.FC<InputFormProps> = ({
   console.log("lastVoznjaId:", lastVoznjaId);
   console.log("lastKonKm:", lastKonKm);
   const [voznjaId, setVoznjaId] = useState<number>(() => lastVoznjaId);
-  const [datum, setDatum] = useState<string>("");
+  const [datum, setDatum] = useState<string>(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  });
   const [zacKm, setZacKm] = useState<number>(lastKonKm);
   const [konKm, setKonKm] = useState<number | null>(null);
   const [namen, setNamen] = useState<string>("");
@@ -36,6 +42,10 @@ const InputVoznik: React.FC<InputFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (konKm !== null && konKm < zacKm) {
+      alert("Končni kilometri ne smejo biti manjši od začetnih kilometrov.");
+      return;
+    }
     const newVoznjaDataRow: VoznjaDataRow = {
       voznja_id: voznjaId,
       datum: new Date(datum),
@@ -58,16 +68,10 @@ const InputVoznik: React.FC<InputFormProps> = ({
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Voznja ID" value={voznjaId} readOnly />
         <input
-          type="text"
+          type="date"
           placeholder="Datum"
           value={datum}
           onChange={(e) => setDatum(e.target.value)}
-          onFocus={(e) => {
-            if (datum !== "") {
-              setDatum("");
-            }
-            e.target.type = "date";
-          }}
         />
         <input
           type="text"

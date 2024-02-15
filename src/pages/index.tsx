@@ -17,16 +17,18 @@ export default function Home() {
           <link rel="icon" href="/logo.png" />
         </Head>
         <div className="flex flex-col items-center justify-center">
-          <div className="animate-float mb-32">
+          <div className="animate-float mb-48">
             <Image src="/logo.png" alt="Logo" width={320} height={320} />
           </div>
           <button
             onClick={() => signIn()}
-            className="to-red-700 hover:bg-red-700 text-white focus:ring-red-500 mt-16 transform rounded-full bg-gradient-to-b from-magenta px-16 py-6 text-2xl font-bold shadow-2xl transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
-            style={{
-              color: "white",
-              boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.6)",
-            }}
+            //   className="to-red-700 hover:bg-red-700 text-white focus:ring-red-500 mt-16 transform rounded-full bg-gradient-to-b from-magenta px-16 py-6 text-2xl font-bold shadow-2xl transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
+            //   style={{
+            //     color: "white",
+            //     boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.6)",
+            //   }}
+            //
+            className="btn w-40 h-12"
           >
             Prijava
           </button>

@@ -14,15 +14,20 @@ interface IntervencijaDataRow {
 }
 
 export default function Intervencije() {
-  const { data, error, isLoading, refetch } = api.post.get_intervencija.useQuery();
+  const { data, error, isLoading, refetch } =
+    api.post.get_intervencija.useQuery();
   const createNew = api.post.add_intervencija.useMutation();
   const [lastIntervencijaId, setLastIntervencijaId] = useState<number>(0);
   const { data: sessionData } = useSession();
 
   React.useEffect(() => {
-    if (!sessionData) {
-      window.location.href = "/";
-    }
+    const delayRedirect = setTimeout(() => {
+      if (!sessionData) {
+        window.location.href = "/";
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayRedirect);
   }, [sessionData]);
 
   useEffect(() => {
