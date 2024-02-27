@@ -38,7 +38,7 @@ const InputIntervencija: React.FC<InputFormProps> = ({
       opis,
     };
     onAdd(newDataRow);
-    setIntervencijaId((prevId) => prevId + 1);
+    setIntervencijaId(intervencijaId + 1);
     setDatum("");
     setTip("");
     setStClanov(null);

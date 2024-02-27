@@ -24,9 +24,9 @@ export default function Intervencije() {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const lastData = data[data.length - 1];
-      if (lastData) {
-        setLastIntervencijaId(lastData.intervencija_id + 1);
+      const firstData = data[0];
+      if (firstData) {
+        setLastIntervencijaId(firstData.intervencija_id + 1);
       }
     }
   }, [data]);
