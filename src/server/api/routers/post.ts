@@ -61,6 +61,26 @@ export const postRouter = createTRPCRouter({
       return "Status updated successfully";
     }),
 
+  update_opis: publicProcedure
+    .input(
+      z.object({
+        oprema_id: z.number(),
+        new_opis: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { oprema_id, new_opis } = input;
+      await ctx.db.oprema.update({
+        where: {
+          id: oprema_id,
+        },
+        data: {
+          opis: new_opis,
+        },
+      });
+
+      return "Status updated successfully";
+    }),
 
   create: publicProcedure
     .input(

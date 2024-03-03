@@ -11,13 +11,16 @@ interface EquipmentItem {
   naziv_opreme: string;
   kolicina: number;
   status_opreme: boolean;
-  opis?: string; // New field for description
+  opis?: string | null; // Modified type to allow for null
 }
 
 export default function Oprema() {
   const { data, error, isLoading, refetch } = api.post.get_oprema.useQuery();
   const update = api.post.update_oprema_status.useMutation();
+  const addOpis = api.post.update_opis.useMutation();
   const { data: sessionData } = useSession();
+  const [showForm, setShowForm] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
   React.useEffect(() => {
     const delayRedirect = setTimeout(() => {
@@ -34,11 +37,32 @@ export default function Oprema() {
     status_opreme: boolean,
   ) => {
     const newStatus = !status_opreme;
-    try {
+    if (newStatus) {
+      // If status is true, set opis to null
+      try {
+        await update.mutateAsync({ oprema_id, new_status: newStatus });
+        await addOpis.mutateAsync({ oprema_id, new_opis: "" });
+        await refetch();
+      } catch (error) {
+        console.error("Error updating status:", error);
+      }
+    } else {
+      // If status is false, show form to update opis
       await update.mutateAsync({ oprema_id, new_status: newStatus });
+
+      setShowForm(true);
+      setSelectedItemId(oprema_id);
+    }
+  };
+
+  const handleFormSubmit = async (opis: string) => {
+    try {
+      await addOpis.mutateAsync({ oprema_id: selectedItemId!, new_opis: opis });
+      setShowForm(false);
+      setSelectedItemId(null);
       await refetch();
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error updating description:", error);
     }
   };
 
@@ -111,12 +135,66 @@ export default function Oprema() {
                       ●
                     </span>
                   </td>
+                  <td>{item.opis || "/"}</td>{" "}
+                  {/* Check for null */}
                 </tr>
               ))}
             </tbody>
           </table>
+          {showForm && (
+            <DescriptionForm
+              onSubmit={handleFormSubmit}
+              onCancel={() => setShowForm(false)}
+            />
+          )}
         </div>
       </main>
     </>
+  );
+}
+
+interface DescriptionFormProps {
+  onSubmit: (opis: string) => void;
+  onCancel: () => void;
+}
+
+function DescriptionForm({ onSubmit, onCancel }: DescriptionFormProps) {
+  const [opis, setOpis] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(opis);
+  };
+
+  return (
+    <div className="bg-black absolute left-0 top-0 flex h-full w-full items-center justify-center bg-opacity-50">
+      <div className="bg-white rounded-md p-8">
+        <h2 className="mb-4 text-xl font-bold">Enter Description</h2>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            className="border-gray-300 mb-4 h-24 w-full rounded-md border p-2"
+            placeholder="Enter description..."
+            value={opis}
+            onChange={(e) => setOpis(e.target.value)}
+            required
+          />
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white hover:bg-blue-600 rounded-md px-4 py-2"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              onClick={onCancel}
+              className="bg-gray-300 text-gray-700 hover:bg-gray-400 rounded-md px-4 py-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
