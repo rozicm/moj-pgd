@@ -157,6 +157,11 @@ interface DescriptionFormProps {
   onCancel: () => void;
 }
 
+interface DescriptionFormProps {
+  onSubmit: (opis: string) => void;
+  onCancel: () => void;
+}
+
 function DescriptionForm({ onSubmit, onCancel }: DescriptionFormProps) {
   const [opis, setOpis] = useState("");
 
@@ -166,30 +171,33 @@ function DescriptionForm({ onSubmit, onCancel }: DescriptionFormProps) {
   };
 
   return (
-    <div className="bg-black absolute left-0 top-0 flex h-full w-full items-center justify-center bg-opacity-50">
-      <div className="bg-white rounded-md p-8">
-        <h2 className="mb-4 text-xl font-bold">Enter Description</h2>
-        <form onSubmit={handleSubmit}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="bg-gray-900 absolute inset-0 bg-opacity-75"></div>
+      <div
+        className="bg-white z-50 mx-4 w-full max-w-md rounded-md p-8"
+        style={{ backgroundColor: "#fff" }}
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
           <textarea
-            className="border-gray-300 mb-4 h-24 w-full rounded-md border p-2"
-            placeholder="Enter description..."
+            className="border-gray-300 text-gray-700 focus:border-blue-500 h-32 w-full rounded-md border px-3 py-2 focus:outline-none"
+            placeholder="Vpiši opis..."
             value={opis}
             onChange={(e) => setOpis(e.target.value)}
             required
           />
           <div className="flex justify-between">
             <button
-              type="submit"
-              className="bg-blue-500 text-white hover:bg-blue-600 rounded-md px-4 py-2"
-            >
-              Submit
-            </button>
-            <button
               type="button"
               onClick={onCancel}
-              className="bg-gray-300 text-gray-700 hover:bg-gray-400 rounded-md px-4 py-2"
+              className="bg-gray-300 text-gray-700 hover:bg-gray-400 focus:bg-gray-400 border-gray-300 rounded-md border px-4 py-2 focus:outline-none transition-colors duration-300 ease-in-out transform hover:scale-105"
             >
-              Cancel
+              Nazaj
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white hover:bg-blue-600 focus:bg-blue-600 border-blue-500 rounded-md border px-4 py-2 focus:outline-none transition-colors duration-300 ease-in-out transform hover:scale-105"
+            >
+              Potrdi
             </button>
           </div>
         </form>
@@ -197,3 +205,4 @@ function DescriptionForm({ onSubmit, onCancel }: DescriptionFormProps) {
     </div>
   );
 }
+
