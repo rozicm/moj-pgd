@@ -40,6 +40,16 @@ export const postRouter = createTRPCRouter({
     });
   }),
 
+  get_finance: publicProcedure.query(({ ctx }) => {
+    return ctx.db.finance.findMany({
+      orderBy: [
+        {
+          transaction_id: "desc",
+        },
+      ],
+    });
+  }),
+
   update_oprema_status: publicProcedure
     .input(
       z.object({
@@ -139,6 +149,25 @@ export const postRouter = createTRPCRouter({
       console.log(input);
 
       return ctx.db.intervencija.create({
+        data: input,
+      });
+    }),
+
+    add_finance: publicProcedure
+    .input(
+      z.object({
+        transaction_id: z.number(),
+        datum: z.date(),
+        artikli: z.string(),
+        cena: z.number(),
+        kupec: z.string(),
+      }),
+    )
+
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
+
+      return ctx.db.finance.create({
         data: input,
       });
     }),

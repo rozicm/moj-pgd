@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
+import { api } from "~/utils/api";
+import InputFinance from "~/components/InputFinances";
 import { useSession } from "next-auth/react";
 
+interface FinanceDataRow {
+  transaction_id: number;
+  datum: Date;
+  artikli: string;
+  cena: number;
+  kupec: string;
+}
+
 export default function Finance() {
+  const { data, error, isLoading, refetch } = api.post.get_finance.useQuery();
+  const createNew = api.post.add_finance.useMutation();
+  const [lastTransactionId, setLastTransactionId] = useState<number>(0);
+
   const { data: sessionData } = useSession();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const delayRedirect = setTimeout(() => {
       if (!sessionData) {
+        // Use Next.js router for navigation
         window.location.href = "/";
       }
     }, 1000);
@@ -16,9 +31,34 @@ export default function Finance() {
     return () => clearTimeout(delayRedirect);
   }, [sessionData]);
 
+  const handleAddMember = async (newMemberData: FinanceDataRow) => {
+    try {
+      await createNew.mutateAsync(newMemberData);
+      await refetch();
+      console.log("New member added:", newMemberData);
+    } catch (error) {
+      console.error("Error adding new member:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const firstData = data[0];
+      if (firstData) {
+        setLastTransactionId(firstData.transaction_id + 1);
+        console.log("First transaction_id:", firstData.transaction_id);
+      } else {
+        console.error("Error: firstData is undefined");
+      }
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
   if (!sessionData) {
     return null;
   }
+
   return (
     <>
       <Head>
@@ -31,7 +71,42 @@ export default function Finance() {
           <Navbar />
         </div>
       </div>
-      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta"></main>
+      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+        <div
+          className="custom-table-container mb-6 mt-16 "
+          style={{ maxHeight: "330px" }}
+        >
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Datum</th>
+                <th>Artikli</th>
+                <th>Cena</th>
+                <th>Kupec</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((rowData) => (
+                <tr key={rowData.transaction_id}>
+                  <td>{rowData.transaction_id}</td>
+                  <td>{new Date(rowData.datum).toLocaleDateString()}</td>
+                  <td>{rowData.artikli}</td>
+                  <td>{rowData.cena}</td>
+                  <td>{rowData.kupec}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="input-form-container mx-auto">
+          <InputFinance
+            lastTransactionId={lastTransactionId}
+            onAdd={handleAddMember}
+          />
+        </div>
+      </main>
     </>
   );
 }

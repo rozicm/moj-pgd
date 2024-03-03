@@ -79,9 +79,10 @@ model Oprema {
 
 model Finance {
     transaction_id  Int @id
-    priliv          Float
-    odliv           Float
-
+    datum DateTime
+    artikli String
+    cena Float
+    kupec String
 }
 
 
