@@ -107,7 +107,7 @@ export default function Oprema() {
                 <th>Ime opreme</th>
                 <th>Količina</th>
                 <th>Status</th>
-                <th>Opis</th> {/* New table header for Description */}
+                <th>Opis</th>
               </tr>
             </thead>
             <tbody>
@@ -136,7 +136,6 @@ export default function Oprema() {
                     </span>
                   </td>
                   <td>{item.opis || "/"}</td>{" "}
-                  {/* Check for null */}
                 </tr>
               ))}
             </tbody>
