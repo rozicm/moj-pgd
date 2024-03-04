@@ -1,3 +1,5 @@
+// Existing code...
+
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
@@ -10,14 +12,21 @@ interface FinanceDataRow {
   datum: Date;
   artikli: string;
   cena: number;
-  kupec: string;
 }
 
 export default function Finance() {
   const { data, error, isLoading, refetch } = api.post.get_finance.useQuery();
   const createNew = api.post.add_finance.useMutation();
   const [lastTransactionId, setLastTransactionId] = useState<number>(0);
-
+  const [expensesByMonth, setExpensesByMonth] = useState<{
+    [key: string]: number;
+  }>({});
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear(),
+  );
+  const [selectedMonth, setSelectedMonth] = useState<number>(
+    new Date().getMonth() + 1,
+  );
   const { data: sessionData } = useSession();
 
   useEffect(() => {
@@ -47,6 +56,20 @@ export default function Finance() {
       if (firstData) {
         setLastTransactionId(firstData.transaction_id + 1);
         console.log("First transaction_id:", firstData.transaction_id);
+
+        // Calculate expenses by month
+        const expenses = data.reduce(
+          (acc: { [key: string]: number }, curr: FinanceDataRow) => {
+            const monthYear = new Date(curr.datum).toLocaleString("default", {
+              month: "long",
+              year: "numeric",
+            });
+            acc[monthYear] = (acc[monthYear] || 0) + curr.cena;
+            return acc;
+          },
+          {},
+        );
+        setExpensesByMonth(expenses);
       } else {
         console.error("Error: firstData is undefined");
       }
@@ -58,6 +81,36 @@ export default function Finance() {
   if (!sessionData) {
     return null;
   }
+
+  // Filter expenses by selected year and month
+  const filteredExpenses = Object.entries(expensesByMonth).filter(
+    ([monthYear]) => {
+      const [month, year] = monthYear.split(" ");
+      return (
+        parseInt(year) === selectedYear &&
+        new Date(Date.parse(month + " 1, " + year)).getMonth() + 1 ===
+          selectedMonth
+      );
+    },
+  );
+
+  // Generate graph data
+  const graphData = filteredExpenses.map(([monthYear, expense]) => ({
+    monthYear,
+    expense,
+  }));
+
+  // Populate dropdown options for years
+  const years = Array.from(
+    new Set(
+      Object.keys(expensesByMonth).map((monthYear) =>
+        parseInt(monthYear.split(" ")[1]),
+      ),
+    ),
+  );
+
+  // Populate dropdown options for months
+  const months = Array.from(Array(12).keys()).map((i) => i + 1);
 
   return (
     <>
@@ -71,7 +124,7 @@ export default function Finance() {
           <Navbar />
         </div>
       </div>
-      <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
         <div
           className="custom-table-container mb-6 mt-16 "
           style={{ maxHeight: "330px" }}
@@ -105,6 +158,78 @@ export default function Finance() {
             lastTransactionId={lastTransactionId}
             onAdd={handleAddMember}
           />
+        </div>
+
+        <div className="bg-white w-full max-w-screen-md rounded-lg p-8 shadow-lg">
+          <h2 className="text-gray-800 mb-4 text-xl font-bold">
+            Expenses by Month
+          </h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {/* Dropdowns for selecting year and month */}
+            <div className="relative">
+              <label
+                htmlFor="year"
+                className="text-gray-700 block text-sm font-medium"
+              >
+                Select Year:
+              </label>
+              <select
+                id="year"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                className="border-gray-300 bg-white focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+              >
+                {years.map((year, index) => (
+                  <option key={index} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative">
+              <label
+                htmlFor="month"
+                className="text-gray-700 block text-sm font-medium"
+              >
+                Select Month:
+              </label>
+              <select
+                id="month"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+                className="border-gray-300 bg-white focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+              >
+                {months.map((month, index) => (
+                  <option key={index} value={month}>
+                    {new Date(2000, month - 1).toLocaleString("default", {
+                      month: "long",
+                    })}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {/* Display component for expenses */}
+            <div className="col-span-3">
+              <h3 className="mb-2 text-lg font-semibold">
+                Expenses for{" "}
+                {new Date(2000, selectedMonth - 1).toLocaleString("default", {
+                  month: "long",
+                })}{" "}
+                {selectedYear}:
+              </h3>
+              <ul>
+                {filteredExpenses.map(([monthYear, expense], index) => (
+                  <li
+                    key={index}
+                    className="bg-gray-100 hover:bg-gray-200 mb-1 rounded-md p-2 transition duration-300 ease-in-out"
+                  >
+                    <span className="font-semibold">{monthYear}:</span> $
+                    {expense.toFixed(2)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </main>
     </>

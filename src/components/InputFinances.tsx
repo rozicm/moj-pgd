@@ -19,7 +19,7 @@ const InputFinance: React.FC<InputFormProps> = ({
 }) => {
   const [datum, setDatum] = useState<string>("");
   const [artikli, setArtikli] = useState<string>("");
-  const [cena, setCena] = useState<number>(0);
+  const [cena, setCena] = useState<string>("");
   const [kupec, setKupec] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,13 +28,13 @@ const InputFinance: React.FC<InputFormProps> = ({
       transaction_id: lastTransactionId,
       datum: new Date(datum),
       artikli: artikli,
-      cena: cena,
+      cena: parseFloat(cena), // Parse string input to float
       kupec: kupec,
     };
     onAdd(newDataRow);
     setDatum("");
     setArtikli("");
-    setCena(0);
+    setCena("");
     setKupec("");
   };
 
@@ -60,10 +60,10 @@ const InputFinance: React.FC<InputFormProps> = ({
           onChange={(e) => setArtikli(e.target.value)}
         />
         <input
-          type="number"
-          placeholder="Cena"
+          type="text" // Change input type to text
+          placeholder="Cena (€)"
           value={cena}
-          onChange={(e) => setCena(parseFloat(e.target.value))}
+          onChange={(e) => setCena(e.target.value)}
         />
         <input
           type="text"
