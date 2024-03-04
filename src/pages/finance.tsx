@@ -1,5 +1,3 @@
-// Existing code...
-
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
@@ -120,11 +118,11 @@ export default function Finance() {
         <link rel="icon" href="/logo.png" />
       </Head>
       <div className="flex w-full flex-col items-center justify-center">
-        <div className="navbar">
+        <div className="navbar fixed top-0 z-50 w-full">
           <Navbar />
         </div>
       </div>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta pt-16">
         <div
           className="custom-table-container mb-6 mt-16 "
           style={{ maxHeight: "330px" }}
@@ -135,7 +133,7 @@ export default function Finance() {
                 <th>ID</th>
                 <th>Datum</th>
                 <th>Artikli</th>
-                <th>Cena</th>
+                <th>Cena (€)</th>
                 <th>Kupec</th>
               </tr>
             </thead>
@@ -159,75 +157,118 @@ export default function Finance() {
             onAdd={handleAddMember}
           />
         </div>
-
-        <div className="bg-white w-full max-w-screen-md rounded-lg p-8 shadow-lg">
-          <h2 className="text-gray-800 mb-4 text-xl font-bold">
-            Expenses by Month
-          </h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {/* Dropdowns for selecting year and month */}
-            <div className="relative">
-              <label
-                htmlFor="year"
-                className="text-gray-700 block text-sm font-medium"
-              >
-                Select Year:
-              </label>
-              <select
-                id="year"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-                className="border-gray-300 bg-white focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
-              >
-                {years.map((year, index) => (
-                  <option key={index} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="relative">
-              <label
-                htmlFor="month"
-                className="text-gray-700 block text-sm font-medium"
-              >
-                Select Month:
-              </label>
-              <select
-                id="month"
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
-                className="border-gray-300 bg-white focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
-              >
-                {months.map((month, index) => (
-                  <option key={index} value={month}>
-                    {new Date(2000, month - 1).toLocaleString("default", {
-                      month: "long",
-                    })}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {/* Display component for expenses */}
-            <div className="col-span-3">
-              <h3 className="mb-2 text-lg font-semibold">
-                Expenses for{" "}
-                {new Date(2000, selectedMonth - 1).toLocaleString("default", {
-                  month: "long",
-                })}{" "}
-                {selectedYear}:
-              </h3>
-              <ul>
-                {filteredExpenses.map(([monthYear, expense], index) => (
-                  <li
-                    key={index}
-                    className="bg-gray-100 hover:bg-gray-200 mb-1 rounded-md p-2 transition duration-300 ease-in-out"
-                  >
-                    <span className="font-semibold">{monthYear}:</span> $
-                    {expense.toFixed(2)}
-                  </li>
-                ))}
-              </ul>
+        <div
+          className="bg-white my-6 mt-12 mb-16 w-full max-w-screen-md rounded-lg p-2"
+          style={{ boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)" }}
+        >
+          <div className="bg-white relative my-6 w-full max-w-screen-md rounded-lg p-2 pt-8">
+            <h1 className="text-gray-800 absolute left-1/2 -translate-x-1/2 -translate-y-1/2 transform pb-16 text-center text-3xl font-bold">
+              Stroški v izbranem mesecu
+            </h1>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div className="col-span-2 flex flex-col justify-center">
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Year selection */}
+                  <div className="relative">
+                    <label htmlFor="year" className="mb-1 block text-xl">
+                      Izberi leto:
+                    </label>
+                    <select
+                      id="year"
+                      value={selectedYear}
+                      onChange={(e) =>
+                        setSelectedYear(parseInt(e.target.value))
+                      }
+                      className="border-gray-300 bg-white focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full rounded-md border px-3 py-2 focus:outline-none sm:text-sm"
+                    >
+                      {years.map((year, index) => (
+                        <option key={index} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {/* Month selection */}
+                  <div className="relative">
+                    <label htmlFor="month" className="mb-1 block text-xl">
+                      Izberi mesec:
+                    </label>
+                    <select
+                      id="month"
+                      value={selectedMonth}
+                      onChange={(e) =>
+                        setSelectedMonth(parseInt(e.target.value))
+                      }
+                      className="border-gray-300 bg-white focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full rounded-md border px-3 py-2 focus:outline-none sm:text-sm"
+                    >
+                      {months.map((month, index) => (
+                        <option key={index} value={month}>
+                          {
+                            [
+                              "januar",
+                              "februar",
+                              "marec",
+                              "april",
+                              "maj",
+                              "junij",
+                              "julij",
+                              "avgust",
+                              "september",
+                              "oktober",
+                              "november",
+                              "december",
+                            ][month - 1]
+                          }
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              {/* Calculated value box */}
+              <div className="justify-center self-end sm:col-span-1 sm:self-auto">
+                <div
+                  className="bg-indigo-100 rounded-lg px-3"
+                  style={{
+                    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)",
+                    background: "linear-gradient(45deg, #ff3d00, #ff1744)",
+                    color: "#fff",
+                    textAlign: "center",
+                  }}
+                >
+                  <ul>
+                    {filteredExpenses.map(([monthYear, expense], index) => (
+                      <li
+                        key={index}
+                        className="bg-indigo-200 hover:bg-indigo-300 mb-2 flex flex-col items-center justify-center rounded-lg p-2 transition duration-300 ease-in-out"
+                      >
+                        <span className="text-lg font-semibold">
+                          {
+                            [
+                              "januar",
+                              "februar",
+                              "marec",
+                              "april",
+                              "maj",
+                              "junij",
+                              "julij",
+                              "avgust",
+                              "september",
+                              "oktober",
+                              "november",
+                              "december",
+                            ][selectedMonth - 1]
+                          }{" "}
+                          {selectedYear}:
+                        </span>
+                        <span className="text-indigo-700 text-base font-bold">
+                          {expense.toFixed(2)} €
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>

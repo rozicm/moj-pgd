@@ -71,7 +71,9 @@ const InputFinance: React.FC<InputFormProps> = ({
           value={kupec}
           onChange={(e) => setKupec(e.target.value)}
         />
-        <button type="submit">Dodaj</button>
+          <button type="submit">
+            Dodaj
+          </button>
       </form>
     </div>
   );

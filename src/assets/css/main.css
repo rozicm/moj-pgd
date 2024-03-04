@@ -485,3 +485,4 @@ input[type="date"]:valid:before {
 .checkbox-wrapper-31 input[type="checkbox"]:checked + svg .check {
   stroke-dashoffset: 0;
 }
+
