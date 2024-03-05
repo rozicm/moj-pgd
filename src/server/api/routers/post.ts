@@ -213,6 +213,54 @@ export const postRouter = createTRPCRouter({
 
       return `Deleted ${deletedRowCount.count} rows successfully`;
     }),
+    
+    getYearlyReport: protectedProcedure.query(async ({ ctx, input }) => {
+      const { year } = input; // Assuming 'year' is passed as input
+  
+      // Fetching number of drivings
+      const voznjeCount = await ctx.db.voznja.count({
+        where: {
+          datum: {
+            gte: new Date(`${year}-01-01`),
+            lt: new Date(`${year + 1}-01-01`),
+          },
+        },
+      });
+  
+      // Fetching number of members
+      const clanCount = await ctx.db.clan.count();
+  
+      // Fetching yearly expenses
+      const yearlyExpenses = await ctx.db.finance.aggregate({
+        _sum: {
+          cena: true,
+        },
+        where: {
+          datum: {
+            gte: new Date(`${year}-01-01`),
+            lt: new Date(`${year + 1}-01-01`),
+          },
+        },
+      });
+  
+      // Fetching number of interventions
+      const interventionsCount = await ctx.db.intervencija.count({
+        where: {
+          datum: {
+            gte: new Date(`${year}-01-01`),
+            lt: new Date(`${year + 1}-01-01`),
+          },
+        },
+      });
+  
+      return {
+        voznje: voznjeCount,
+        člani: clanCount,
+        izdatki: yearlyExpenses._sum.cena ?? 0, // In case no expenses found
+        intervencije: interventionsCount,
+      };
+    }),
+    
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";

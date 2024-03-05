@@ -1,0 +1,27 @@
+"filename", "language", "TypeScript", "TypeScript JSX", "JavaScript", "CSS", "comment", "blank", "total"
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/assets/css/main.css", "CSS", 0, 0, 0, 416, 16, 57, 489
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/AuthShowcase.tsx", "TypeScript JSX", 0, 24, 0, 0, 9, 5, 38
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/ClanTable.tsx", "TypeScript JSX", 0, 146, 0, 0, 0, 10, 156
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/InputFinances.tsx", "TypeScript JSX", 0, 76, 0, 0, 0, 7, 83
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/InputForm.tsx", "TypeScript JSX", 0, 127, 0, 0, 0, 8, 135
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/InputIntervencija.tsx", "TypeScript JSX", 0, 111, 0, 0, 0, 9, 120
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/InputVoznik.tsx", "TypeScript JSX", 0, 102, 0, 0, 0, 8, 110
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/Navbar.tsx", "TypeScript JSX", 0, 44, 0, 0, 1, 3, 48
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/components/Okvir.tsx", "TypeScript JSX", 0, 9, 0, 0, 0, 3, 12
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/env.mjs", "JavaScript", 0, 0, 42, 0, 26, 4, 72
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/_app.tsx", "TypeScript JSX", 0, 17, 0, 0, 0, 5, 22
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/api/auth/[...nextauth].ts", "TypeScript", 3, 0, 0, 0, 0, 4, 7
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/api/trpc/[trpc].ts", "TypeScript", 16, 0, 0, 0, 1, 3, 20
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/finance.tsx", "TypeScript JSX", 0, 246, 0, 0, 9, 15, 270
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/index.tsx", "TypeScript JSX", 0, 51, 0, 0, 14, 8, 73
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/intervencije.tsx", "TypeScript JSX", 0, 159, 0, 0, 0, 11, 170
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/oprema.tsx", "TypeScript JSX", 0, 189, 0, 0, 2, 18, 209
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/pages/voznje.tsx", "TypeScript JSX", 0, 172, 0, 0, 0, 13, 185
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/server/api/root.ts", "TypeScript", 6, 0, 0, 0, 6, 3, 15
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/server/api/routers/post.ts", "TypeScript", 193, 0, 0, 0, 0, 28, 221
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/server/api/trpc.ts", "TypeScript", 49, 0, 0, 0, 67, 16, 132
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/server/auth.ts", "TypeScript", 37, 0, 0, 0, 69, 9, 115
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/server/db.ts", "TypeScript", 12, 0, 0, 0, 0, 5, 17
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/styles/globals.css", "CSS", 0, 0, 0, 3, 0, 1, 4
+"/Users/maticrozic/Documents/Vegova/moj-pgd/src/utils/api.ts", "TypeScript", 30, 0, 0, 0, 32, 7, 69
+"Total", "-", 346, 1473, 42, 419, 252, 260, 2792

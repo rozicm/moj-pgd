@@ -35,8 +35,11 @@ const Navbar: React.FC = () => {
           <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
             <Link href="/intervencije">Intervencije</Link>
           </li>
+          <li className="transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+            <Link href="/letnoPorocilo">Letno poročilo</Link>
+          </li>
         </ul>
-        <div className="color-white">
+        <div className="color-white mr-3">
           <AuthShowcase />
         </div>
       </div>

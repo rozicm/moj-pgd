@@ -11,7 +11,7 @@ interface EquipmentItem {
   naziv_opreme: string;
   kolicina: number;
   status_opreme: boolean;
-  opis?: string | null; // Modified type to allow for null
+  opis?: string | null; 
 }
 
 export default function Oprema() {
@@ -38,7 +38,6 @@ export default function Oprema() {
   ) => {
     const newStatus = !status_opreme;
     if (newStatus) {
-      // If status is true, set opis to null
       try {
         await update.mutateAsync({ oprema_id, new_status: newStatus });
         await addOpis.mutateAsync({ oprema_id, new_opis: "" });
@@ -47,7 +46,6 @@ export default function Oprema() {
         console.error("Error updating status:", error);
       }
     } else {
-      // If status is false, show form to update opis
       await update.mutateAsync({ oprema_id, new_status: newStatus });
 
       setShowForm(true);
@@ -135,7 +133,7 @@ export default function Oprema() {
                       ●
                     </span>
                   </td>
-                  <td>{item.opis || "/"}</td>{" "}
+                  <td>{item.opis || "/"}</td>
                 </tr>
               ))}
             </tbody>

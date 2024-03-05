@@ -30,7 +30,6 @@ export default function Finance() {
   useEffect(() => {
     const delayRedirect = setTimeout(() => {
       if (!sessionData) {
-        // Use Next.js router for navigation
         window.location.href = "/";
       }
     }, 1000);
@@ -55,7 +54,6 @@ export default function Finance() {
         setLastTransactionId(firstData.transaction_id + 1);
         console.log("First transaction_id:", firstData.transaction_id);
 
-        // Calculate expenses by month
         const expenses = data.reduce(
           (acc: { [key: string]: number }, curr: FinanceDataRow) => {
             const monthYear = new Date(curr.datum).toLocaleString("default", {
@@ -80,7 +78,6 @@ export default function Finance() {
     return null;
   }
 
-  // Filter expenses by selected year and month
   const filteredExpenses = Object.entries(expensesByMonth).filter(
     ([monthYear]) => {
       const [month, year] = monthYear.split(" ");
@@ -92,13 +89,10 @@ export default function Finance() {
     },
   );
 
-  // Generate graph data
   const graphData = filteredExpenses.map(([monthYear, expense]) => ({
     monthYear,
     expense,
   }));
-
-  // Populate dropdown options for years
   const years = Array.from(
     new Set(
       Object.keys(expensesByMonth).map((monthYear) =>
@@ -107,7 +101,6 @@ export default function Finance() {
     ),
   );
 
-  // Populate dropdown options for months
   const months = Array.from(Array(12).keys()).map((i) => i + 1);
 
   return (
@@ -158,11 +151,14 @@ export default function Finance() {
           />
         </div>
         <div
-          className="bg-white my-6 mt-12 mb-16 w-full max-w-screen-md rounded-lg p-2"
+          className="bg-white my-6 mb-16 mt-12 w-full max-w-screen-md rounded-lg p-2"
           style={{ boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)" }}
         >
           <div className="bg-white relative my-6 w-full max-w-screen-md rounded-lg p-2 pt-8">
-            <h1 className="text-gray-800 absolute left-1/2 -translate-x-1/2 -translate-y-1/2 transform pb-16 text-center text-3xl font-bold">
+            <h1
+              style={{ color: "#fff" }}
+              className="text-gray-800 absolute left-1/2 -translate-x-1/2 -translate-y-1/2 transform pb-16 text-center text-3xl font-bold"
+            >
               Stroški v izbranem mesecu
             </h1>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -170,7 +166,11 @@ export default function Finance() {
                 <div className="grid grid-cols-2 gap-4">
                   {/* Year selection */}
                   <div className="relative">
-                    <label htmlFor="year" className="mb-1 block text-xl">
+                    <label
+                      htmlFor="year"
+                      style={{ color: "#fff" }}
+                      className="mb-1 block text-xl"
+                    >
                       Izberi leto:
                     </label>
                     <select
@@ -188,9 +188,12 @@ export default function Finance() {
                       ))}
                     </select>
                   </div>
-                  {/* Month selection */}
                   <div className="relative">
-                    <label htmlFor="month" className="mb-1 block text-xl">
+                    <label
+                      htmlFor="month"
+                      style={{ color: "#fff" }}
+                      className="mb-1 block text-xl"
+                    >
                       Izberi mesec:
                     </label>
                     <select
@@ -225,12 +228,10 @@ export default function Finance() {
                   </div>
                 </div>
               </div>
-              {/* Calculated value box */}
-              <div className="justify-center self-end sm:col-span-1 sm:self-auto">
+              <div className="mt-8 justify-center self-end sm:col-span-1 sm:self-auto">
                 <div
-                  className="bg-indigo-100 rounded-lg px-3"
+                  className="bg-indigo-100 rounded-lg shadow-md"
                   style={{
-                    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)",
                     background: "linear-gradient(45deg, #ff3d00, #ff1744)",
                     color: "#fff",
                     textAlign: "center",
@@ -240,27 +241,8 @@ export default function Finance() {
                     {filteredExpenses.map(([monthYear, expense], index) => (
                       <li
                         key={index}
-                        className="bg-indigo-200 hover:bg-indigo-300 mb-2 flex flex-col items-center justify-center rounded-lg p-2 transition duration-300 ease-in-out"
+                        className="bg-indigo-200 hover:bg-indigo-300 mb-2 rounded-lg p-3 transition duration-300 ease-in-out"
                       >
-                        <span className="text-lg font-semibold">
-                          {
-                            [
-                              "januar",
-                              "februar",
-                              "marec",
-                              "april",
-                              "maj",
-                              "junij",
-                              "julij",
-                              "avgust",
-                              "september",
-                              "oktober",
-                              "november",
-                              "december",
-                            ][selectedMonth - 1]
-                          }{" "}
-                          {selectedYear}:
-                        </span>
                         <span className="text-indigo-700 text-base font-bold">
                           {expense.toFixed(2)} €
                         </span>
