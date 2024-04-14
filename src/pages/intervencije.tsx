@@ -157,7 +157,7 @@ export default function Intervencije() {
             Izbriši izbrani zapis
           </button>
         </div>
-        <div className="input-form-container mx-auto my-10 flex flex-col items-center">
+        <div className="input-form-container mx-auto ">
           <InputIntervencija
             lastIntervencijaId={lastIntervencijaId}
             onAdd={handleAddMember}

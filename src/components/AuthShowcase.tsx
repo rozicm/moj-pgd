@@ -12,9 +12,8 @@ const AuthShowcase: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center pr-2 text-xl">
-      {/* <p className="color-white text-center text-2xl">
+      {/* <p className="color-white text-center pr-4">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
       </p> */}
       <button
         className={`transform rounded-full px-8 py-2 font-semibold no-underline transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110 ${

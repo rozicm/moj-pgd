@@ -80,7 +80,7 @@ const InputIntervencija: React.FC<InputFormProps> = ({
             value={tip}
             onChange={(e) => setTip(e.target.value)}
           />
-
+        
           <input
             type="text"
             placeholder="Število članov"
@@ -96,12 +96,7 @@ const InputIntervencija: React.FC<InputFormProps> = ({
             value={opis}
             onChange={(e) => setOpis(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Gasilci"
-            value={opis}
-            onChange={(e) => setOpis(e.target.value)}
-          />
+          
         </div>
         <div className="flex justify-center">
           <button

@@ -1,0 +1,100 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  accounts Account [not null]
+  sessions Session [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Table Oprema {
+  id Int [pk]
+  naziv_opreme String [not null]
+  kolicina Int [not null]
+  status_opreme Boolean [not null]
+  opis String [not null]
+}
+
+Table Finance {
+  transaction_id Int [pk]
+  datum DateTime [not null]
+  artikli String [not null]
+  cena Float [not null]
+  kupec String [not null]
+}
+
+Table Voznja {
+  voznja_id Int [pk]
+  datum DateTime [not null]
+  zac_km Int [not null]
+  kon_km Int [not null]
+  namen String [not null]
+  voznik String [not null]
+}
+
+Table Clan {
+  clan_id Int [pk]
+  ime String [not null]
+  priimek String [not null]
+  datum_rojstva DateTime [not null]
+  specialnosti String [not null]
+  kraj_bivanja String [not null]
+  zdravniski DateTime
+  funkcija String [not null]
+  cin String [not null]
+}
+
+Table Intervencija {
+  intervencija_id Int [pk]
+  datum DateTime [not null]
+  tip String [not null]
+  st_clanov Int [not null]
+  opis String [not null]
+}
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]

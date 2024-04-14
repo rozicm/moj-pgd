@@ -11,7 +11,7 @@ interface EquipmentItem {
   naziv_opreme: string;
   kolicina: number;
   status_opreme: boolean;
-  opis?: string | null; 
+  opis?: string | null;
 }
 
 export default function Oprema() {
@@ -187,13 +187,13 @@ function DescriptionForm({ onSubmit, onCancel }: DescriptionFormProps) {
             <button
               type="button"
               onClick={onCancel}
-              className="bg-gray-300 text-gray-700 hover:bg-gray-400 focus:bg-gray-400 border-gray-300 rounded-md border px-4 py-2 focus:outline-none transition-colors duration-300 ease-in-out transform hover:scale-105"
+              className="bg-gray-300 text-gray-700 hover:bg-gray-400 focus:bg-gray-400 border-gray-300 transform rounded-md border px-4 py-2 transition-colors duration-300 ease-in-out hover:scale-105 focus:outline-none"
             >
               Nazaj
             </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white hover:bg-blue-600 focus:bg-blue-600 border-blue-500 rounded-md border px-4 py-2 focus:outline-none transition-colors duration-300 ease-in-out transform hover:scale-105"
+              className="bg-blue-500 text-white hover:bg-blue-600 focus:bg-blue-600 border-blue-500 transform rounded-md border px-4 py-2 transition-colors duration-300 ease-in-out hover:scale-105 focus:outline-none"
             >
               Potrdi
             </button>
@@ -203,4 +203,3 @@ function DescriptionForm({ onSubmit, onCancel }: DescriptionFormProps) {
     </div>
   );
 }
-

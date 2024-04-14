@@ -2,28 +2,37 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import { api } from "~/utils/api";
-import { useSession } from "next-auth/react"; // Ensure correct import
+import { useSession } from "next-auth/react";
 
 export default function LetnoPorocilo() {
-  const { data: session, status } = useSession();
-  const [yearlyReport, setYearlyReport] = useState(null);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [startDate, setStartDate] = useState(
+    new Date("2000-01-01").toISOString().split("T")[0],
+  );
+  const [endDate, setEndDate] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const {
+    data: reportData,
+    error,
+    refetch,
+  } = api.post.getYearlyReport.useQuery({
+    startDate: new Date(startDate || "2000-01-01"), // Pass startDate with a default value
+    endDate: new Date(endDate || new Date()), // Pass endDate with a default value
+  });
 
   useEffect(() => {
-    async function fetchYearlyReport() {
-        try {
-          const response = await api.getYearlyReport({ year: 2024 });
-          console.log("API Response:", response);
-          setYearlyReport(response);
-          setDataLoaded(true); // Set dataLoaded to true when data is fetched
-        } catch (error) {
-          console.error("Error fetching yearly report:", error);
-        }
+    // Fetch data for the selected dates when the component mounts or when startDate or endDate changes
+    const fetchData = async () => {
+      try {
+        await refetch(); // Just call refetch without any parameters
+      } catch (error) {
+        // Handle errors here
+        console.error("Error fetching yearly report:", error);
       }
-      
-  
-    fetchYearlyReport();
-  }, []);
+    };
+
+    fetchData(); // Call the fetch function
+  }, [startDate, endDate, refetch]);
 
   return (
     <>
@@ -37,18 +46,33 @@ export default function LetnoPorocilo() {
           <Navbar />
         </div>
       </div>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta">
-        {dataLoaded && yearlyReport && (
+      <main
+        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-magenta"
+        style={{ color: "#fff" }}
+      >
+        <div>
+          <h1>Select Dates</h1>
+          <label>Start Date:</label>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <label>End Date:</label>
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
+        {reportData && (
           <div>
-            <h1>Yearly Report for 2024</h1>
-            <p>Number of Drivings: {yearlyReport.voznje}</p>
-            <p>Number of Members: {yearlyReport.člani}</p>
-            <p>Yearly Expenses: {yearlyReport.izdatki} EUR</p>
-            <p>Number of Interventions: {yearlyReport.intervencije}</p>
+            <h1>Yearly Report</h1>
+            <p>Total Drivings: {reportData.voznje}</p>
+            <p>Total Members: {reportData.člani}</p>
+            <p>Yearly Expenses: {reportData.izdatki} €</p>
+            <p>Total Interventions: {reportData.intervencije}</p>
           </div>
-        )}
-        {!dataLoaded && (
-          <p>Loading...</p>
         )}
       </main>
     </>

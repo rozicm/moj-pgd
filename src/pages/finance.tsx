@@ -89,10 +89,7 @@ export default function Finance() {
     },
   );
 
-  const graphData = filteredExpenses.map(([monthYear, expense]) => ({
-    monthYear,
-    expense,
-  }));
+  
   const years = Array.from(
     new Set(
       Object.keys(expensesByMonth).map((monthYear) =>

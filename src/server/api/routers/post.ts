@@ -17,7 +17,13 @@ export const postRouter = createTRPCRouter({
   }),
 
   get_oprema: publicProcedure.query(({ ctx }) => {
-    return ctx.db.oprema.findMany();
+    return ctx.db.oprema.findMany({
+      orderBy: [
+        {
+          id: "asc",
+        }
+      ]
+    });
   }),
 
   get_voznja: publicProcedure.query(({ ctx }) => {
@@ -214,53 +220,51 @@ export const postRouter = createTRPCRouter({
       return `Deleted ${deletedRowCount.count} rows successfully`;
     }),
     
-    getYearlyReport: protectedProcedure.query(async ({ ctx, input }) => {
-      const { year } = input; // Assuming 'year' is passed as input
+    getYearlyReport: protectedProcedure.query(async ({ ctx, input = { startDate: new Date('2000-01-01'), endDate: new Date() } }) => {
+      const { startDate: defaultStartDate, endDate: defaultEndDate } = input;
+      const today = new Date();
+      const startDate = defaultStartDate < today ? defaultStartDate : today;
+      const endDate = defaultEndDate < today ? defaultEndDate : today;
   
-      // Fetching number of drivings
       const voznjeCount = await ctx.db.voznja.count({
-        where: {
-          datum: {
-            gte: new Date(`${year}-01-01`),
-            lt: new Date(`${year + 1}-01-01`),
+          where: {
+              datum: {
+                  gte: startDate,
+                  lt: endDate,
+              },
           },
-        },
       });
   
-      // Fetching number of members
       const clanCount = await ctx.db.clan.count();
   
-      // Fetching yearly expenses
       const yearlyExpenses = await ctx.db.finance.aggregate({
-        _sum: {
-          cena: true,
-        },
-        where: {
-          datum: {
-            gte: new Date(`${year}-01-01`),
-            lt: new Date(`${year + 1}-01-01`),
+          _sum: {
+              cena: true,
           },
-        },
+          where: {
+              datum: {
+                  gte: startDate,
+                  lt: endDate,
+              },
+          },
       });
   
-      // Fetching number of interventions
       const interventionsCount = await ctx.db.intervencija.count({
-        where: {
-          datum: {
-            gte: new Date(`${year}-01-01`),
-            lt: new Date(`${year + 1}-01-01`),
+          where: {
+              datum: {
+                  gte: startDate,
+                  lt: endDate,
+              },
           },
-        },
       });
   
       return {
-        voznje: voznjeCount,
-        člani: clanCount,
-        izdatki: yearlyExpenses._sum.cena ?? 0, // In case no expenses found
-        intervencije: interventionsCount,
+          voznje: voznjeCount,
+          člani: clanCount,
+          izdatki: yearlyExpenses._sum.cena ?? 0,
+          intervencije: interventionsCount,
       };
-    }),
-    
+  }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";

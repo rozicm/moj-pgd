@@ -141,7 +141,7 @@ const ClanTable: React.FC = () => {
           }}
         >
           <button onClick={handleDeleteSelectedRows}>
-            Izbriši izbrani zapis
+            Izbriši izbrane zapise
           </button>
         </div>
       </div>
