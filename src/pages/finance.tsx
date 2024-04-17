@@ -89,7 +89,6 @@ export default function Finance() {
     },
   );
 
-  
   const years = Array.from(
     new Set(
       Object.keys(expensesByMonth).map((monthYear) =>

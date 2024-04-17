@@ -5,7 +5,6 @@ import ClanTable from "~/components/ClanTable";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 
-
 export default function Clani() {
   const { data: sessionData } = useSession();
 
@@ -21,10 +20,7 @@ export default function Clani() {
           <div className="animate-float mb-48">
             <Image src="/logo.png" alt="Logo" width={320} height={320} />
           </div>
-          <button
-            onClick={() => signIn()}
-            className="btn w-40 h-12"
-          >
+          <button onClick={() => signIn()} className="btn w-40 h-12">
             Prijava
           </button>
         </div>
@@ -32,7 +28,6 @@ export default function Clani() {
     );
     return null;
   }
-
 
   return (
     <>
