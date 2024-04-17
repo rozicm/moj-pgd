@@ -106,7 +106,7 @@ export default function Voznje() {
             <thead>
               <tr>
                 <th></th>
-                <th>Voznja ID</th>
+                <th>Vožnja ID</th>
                 <th>Datum</th>
                 <th>Začetni kilometri</th>
                 <th>Končni kilometri</th>

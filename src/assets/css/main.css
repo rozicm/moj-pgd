@@ -54,29 +54,29 @@
   width: 90%;
   overflow-x: auto;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
-  position: relative; /* Position relative for stacking context */
+  position: relative; 
 }
 
-/* Define scrollbar colors using scrollbar-color property */
+
 .custom-table-container {
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #555 #333; /* Track and thumb color */
+  scrollbar-width: thin; 
+  scrollbar-color: #555 #333; 
 }
 
-/* Track */
+
 .custom-table-container::-webkit-scrollbar-track {
-  background: #333; /* Darker track color */
+  background: #333; 
 }
 
-/* Handle */
+
 .custom-table-container::-webkit-scrollbar-thumb {
-  background: #555; /* Darker thumb color */
+  background: #555;
   border-radius: 10px;
 }
 
-/* Handle on hover */
+
 .custom-table-container::-webkit-scrollbar-thumb:hover {
-  background: #777; /* Lighter thumb color on hover */
+  background: #777; 
 }
 
 .custom-table {
@@ -85,39 +85,38 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-  position: relative; /* Position relative for stacking context */
+  position: relative; 
 }
 
 .custom-table th,
 .custom-table td {
   padding: 12px;
   text-align: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
-  color: #fff; /* White text color */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle box shadow for separation */
-  font-weight: bold; /* Make the text bold */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold; 
 }
 
 .custom-table thead th {
-  background: linear-gradient(45deg, #ff3d00, #ff1744); /* Gradient Red */
+  background: linear-gradient(45deg, #ff3d00, #ff1744); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
-  z-index: 2; /* Ensure it's above other elements */
+  z-index: 2; 
 }
 
 .custom-table tbody tr:hover {
-  background-color: #4a0c1e; /* Darker Red */
+  background-color: #4a0c1e;
   transition: background-color 0.3s ease;
-  transform: translateY(-5px); /* Elevate slightly on hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  transform: translateY(-5px); 
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); 
 }
 
-/* Animation for table rows */
 .custom-table tbody tr {
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease; /* Smooth transition */
+    box-shadow 0.3s ease; 
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -132,23 +131,21 @@
   }
 }
 
-/* New styles for table header and alternating row colors */
 .custom-table thead th {
-  background-color: #4a0c1e; /* Dark Red */
+  background-color: #4a0c1e; 
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
 }
 
 .custom-table tbody tr:nth-child(even) {
-  background-color: #31111e; /* Darker Red for even rows */
+  background-color: #31111e; 
 }
 
 .custom-table tbody tr:hover {
-  background-color: #5e1529; /* Even darker red on hover */
+  background-color: #5e1529; 
 }
 
-/* Rounded corners for first and last rows */
 .custom-table tbody tr:first-child td:first-child,
 .custom-table tbody tr:first-child td:last-child,
 .custom-table tbody tr:last-child td:first-child,
@@ -156,16 +153,14 @@
   border-radius: 8px;
 }
 
-/* Add gradient effect on hover */
 .custom-table tbody tr:hover td {
   background: linear-gradient(45deg, #ff3d00, #ff1744);
 }
 
-/* Styling for the cell content */
 .custom-table tbody td {
   font-size: 14px;
   line-height: 1.5;
-  font-weight: bold; /* Make the text in td elements bold */
+  font-weight: bold; 
 }
 
 .input-form-container {
@@ -177,63 +172,63 @@
     green,
     blue,
     alpha
-  ); /* Dark Red, matching table header */
+  ); 
   border-radius: 12px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.8);
-  animation: fadeIn 0.5s ease-out; /* Apply fadeIn animation */
+  animation: fadeIn 0.5s ease-out; 
 }
 
 .input-form-container form {
   display: flex;
-  flex-wrap: wrap; /* Allow inputs to wrap if needed */
-  justify-content: center; /* Center items horizontally */
+  flex-wrap: wrap; 
+  justify-content: center; 
 }
 
 .input-form-container input {
   width: calc(
     33.33% - 20px
-  ); /* Occupies one-third of container width with spacing */
+  ); 
   padding: 12px 24px;
   margin: 10px;
   border-radius: 8px;
-  border: 1px solid #ff1744; /* Gradient Red, matching table header */
-  background-color: #31111e; /* Darker Red for even rows, matching table */
-  color: #fff; /* White text color, matching table */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle box shadow for consistency */
+  border: 1px solid #ff1744; 
+  background-color: #31111e; 
+  color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
   transition:
     background-color 0.3s ease,
     transform 0.2s ease,
-    box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow 0.3s ease; 
 }
 
 .input-form-container input:focus {
-  outline: none; /* Remove default focus outline */
-  background-color: #4a0c1e; /* Dark Red, matching table header */
+  outline: none;
+  background-color: #4a0c1e; 
 }
 
 .input-form-container input:hover {
-  background-color: #5e1529; /* Even darker red on hover */
+  background-color: #5e1529; 
   background: linear-gradient(45deg, #ff3d00, #ff1744);
 }
 
 .input-form-container input {
-  /* Existing input styles */
+  
   transition:
     background-color 0.3s ease,
     box-shadow 0.3s ease,
-    transform 0.2s ease; /* Include transform transition */
+    transform 0.2s ease; 
 }
 
 .input-form-container input:hover {
-  background-color: #5e1529; /* Even darker red on hover */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add a glow effect on hover */
-  transform: translateY(-5px); /* Pop out the hovered column slightly */
+  background-color: #5e1529; 
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); 
+  transform: translateY(-5px); 
 }
 
 .input-form-container input:focus {
-  outline: none; /* Remove default focus outline */
-  background-color: #4a0c1e; /* Dark Red, matching table header */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add a glow effect on focus */
+  outline: none; 
+  background-color: #4a0c1e; 
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); 
 }
 
 .input-form-container button {
@@ -243,35 +238,35 @@
     45deg,
     #ff3d00,
     #ff1744
-  ); /* Gradient Red, matching table header */
+  ); 
   color: #fff;
   border: none;
   cursor: pointer;
   transition:
     background-color 0.3s ease,
     transform 0.2s ease,
-    box-shadow 0.3s ease; /* Include transform transition */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle box shadow */
+    box-shadow 0.3s ease; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .input-form-container button:hover {
-  background-color: #ff1744; /* Darker Red, matching table header gradient */
-  transform: translateY(-2px) scale(1.05); /* Pop out and scale up slightly on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Add a stronger shadow on hover */
+  background-color: #ff1744; 
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
 }
 
 .input-form-container button:active {
-  transform: translateY(1px) scale(0.98); /* Slight downward movement and scale down on click */
-  box-shadow: none; /* Remove box shadow on click */
+  transform: translateY(1px) scale(0.98); 
+  box-shadow: none; 
 }
 
-/* Animation for input form */
+
 .input-form-container:hover {
-  transform: translateY(-5px); /* Elevate slightly on hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  transform: translateY(-5px); 
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); 
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease; /* Smooth transition */
+    box-shadow 0.3s ease; 
 }
 
 .dot {
@@ -282,26 +277,26 @@
 }
 
 .cool-image {
-  transform: rotate(5deg) scale(1); /* Rotation and scale */
+  transform: rotate(5deg) scale(1); 
   transition:
     filter 0.5s ease,
-    transform 0.5s ease; /* Smooth transition for effects */
-  animation: flow 5s infinite alternate ease-in-out; /* Flow animation */
+    transform 0.5s ease; 
+  animation: flow 5s infinite alternate ease-in-out; 
 }
 
 .cool-image:hover {
-  transform: rotate(0deg) scale(1.1); /* Reset rotation and scale up slightly on hover */
+  transform: rotate(0deg) scale(1.1); 
 }
 
 @keyframes flow {
   0% {
-    transform: translateY(-10px); /* Start slightly above */
+    transform: translateY(-10px);
   }
   50% {
-    transform: translateY(10px); /* Move down */
+    transform: translateY(10px); 
   }
   100% {
-    transform: translateY(-10px); /* Move back up */
+    transform: translateY(-10px); 
   }
 }
 
@@ -314,8 +309,6 @@ input[type="date"]:focus:before,
 input[type="date"]:valid:before {
   content: "";
 }
-/* styles.css */
-
 @keyframes float {
   0%,
   100% {
@@ -338,7 +331,6 @@ input[type="date"]:valid:before {
   --bg: #080312;
   --color: #afffff;
   color: var(--color);
-  /* use position: relative; so that BG is only for .btn */
   position: relative;
   isolation: isolate;
   display: inline-grid;
@@ -486,3 +478,59 @@ input[type="date"]:valid:before {
   stroke-dashoffset: 0;
 }
 
+.animated {
+  animation-duration: 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.border:hover,
+.border:focus,
+.border:active {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.border-gray-800:hover,
+.border-gray-800:focus,
+.border-gray-800:active {
+  border-color: #ff3d00;
+}
+
+.bg-blue-500:hover,
+.bg-blue-500:focus,
+.bg-blue-500:active {
+  background: linear-gradient(45deg, #ff3d00, #ff1744);
+}
+
+.text-white:hover,
+.text-white:focus,
+.text-white:active {
+  color: #ff3d00;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}

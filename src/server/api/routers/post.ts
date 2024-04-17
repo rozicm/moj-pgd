@@ -220,8 +220,8 @@ export const postRouter = createTRPCRouter({
       return `Deleted ${deletedRowCount.count} rows successfully`;
     }),
     
-    getYearlyReport: protectedProcedure.query(async ({ ctx, input = { startDate: new Date('2000-01-01'), endDate: new Date() } }) => {
-      const { startDate: defaultStartDate, endDate: defaultEndDate } = input;
+    getYearlyReport: protectedProcedure.input(z.object({startDate: z.date(), endDate:z.date()})).query(async ({ ctx, input }) => {
+      const { startDate: defaultStartDate, endDate: defaultEndDate } = input; 
       const today = new Date();
       const startDate = defaultStartDate < today ? defaultStartDate : today;
       const endDate = defaultEndDate < today ? defaultEndDate : today;
@@ -236,7 +236,20 @@ export const postRouter = createTRPCRouter({
       });
   
       const clanCount = await ctx.db.clan.count();
-  
+      const mentorCount = await ctx.db.clan.count({
+        where: {
+          funkcija : 'Mentor mladine'
+        }
+      });
+
+      const zdravniskiCount = await ctx.db.clan.count({
+        where: {
+            zdravniski: {
+                gt: endDate,
+            },
+        },
+    });
+    
       const yearlyExpenses = await ctx.db.finance.aggregate({
           _sum: {
               cena: true,
@@ -261,7 +274,9 @@ export const postRouter = createTRPCRouter({
       return {
           voznje: voznjeCount,
           člani: clanCount,
-          izdatki: yearlyExpenses._sum.cena ?? 0,
+          mentorji: mentorCount,
+          zdravniskiCount: zdravniskiCount,
+          stroški: yearlyExpenses._sum.cena ?? 0,
           intervencije: interventionsCount,
       };
   }),

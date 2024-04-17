@@ -1,15 +1,8 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-// import { api } from "~/utils/api";
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
-
-  // const { data: secretMessage } = api.post.getSecretMessage.useQuery(
-  //   undefined,
-  //   { enabled: sessionData?.user !== undefined },
-  // );
-
   return (
     <div className="flex items-center justify-center pr-2 text-xl">
       {/* <p className="color-white text-center pr-4">

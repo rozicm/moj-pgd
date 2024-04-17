@@ -2,7 +2,6 @@ import Link from "next/link";
 import AuthShowcase from "./AuthShowcase";
 import LogoImg from "~/assets/img/logo.png";
 import Image from "next/image";
-// import { api } from "~/utils/api";
 
 const Navbar: React.FC = () => {
   return (
